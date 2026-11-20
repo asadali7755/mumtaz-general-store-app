@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mumtaz General Store — App Demo</title>
+<meta name="description" content="ممتاز جنرل اسٹور — ڈیجیٹل کھاتہ اور آرڈر ایپ (ڈیمو) · Digital Khata & Ordering App demo">
+<meta property="og:title" content="Mumtaz General Store — Digital Khata & Order App">
+<meta property="og:description" content="ممتاز جنرل اسٹور کی اپنی ایپ — گھر بیٹھے آرڈر، ڈیجیٹل کھاتہ، WhatsApp بل۔ ڈیمو دیکھیں۔">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B5D3B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#E4E7E0;font-family:Inter,'Noto Naskh Arabic',sans-serif;-webkit-tap-highlight-color:transparent}
+a{color:#0B5D3B}
+.n{font-family:Inter,sans-serif;direction:ltr;unicode-bidi:isolate}
+.scr{scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+button,input{font-family:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #F2B33D;outline-offset:2px}
+.stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px 40px}
+.switch{display:flex;background:#FFFFFF;border-radius:99px;padding:4px;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.switch button{border:0;background:transparent;border-radius:99px;height:40px;padding:0 18px;font-size:14px;font-weight:600;color:#4A534C;cursor:pointer;font-family:'Noto Naskh Arabic',Inter,sans-serif}
+.switch button.on{background:#0B5D3B;color:#FFFFFF}
+.frame{border-radius:40px;overflow:hidden;box-shadow:0 0 0 10px #15201A,0 30px 60px -20px rgba(21,32,26,.45)}
+.credit{font-size:12px;color:#5D665F;font-family:Inter,sans-serif}
+@media (max-width:520px){
+  .stage{padding:0;gap:0;min-height:100dvh}
+  .switch{border-radius:0;width:100%;box-shadow:none;border-bottom:1px solid #E7E8E2;justify-content:center}
+  .switch button{flex:1}
+  .frame{border-radius:0;box-shadow:none;width:100%}
+  .frame>div{width:100% !important;height:calc(100dvh - 49px) !important}
+  .credit{display:none}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="switch" role="tablist">
+    <button id="sw-app" class="on" onclick="show('app')">ایپ ڈیمو · App</button>
+    <button id="sw-pitch" onclick="show('pitch')">یہ ایپ کیوں؟ · Why</button>
+  </div>
+  <div class="frame" id="mount"></div>
+  <div class="credit">Demo by Asad Ali · NexaGrow</div>
+</div>
+<template id="tpl-main"><div dir="{{dir}}" lang="{{lang}}" style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #121A15; position: relative; overflow: hidden; font-family: {{font}}">
+
+  <div style="background: #121A15; color: #FFFFFF; height: 44px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0">
+    <span style="font-size: 12px; color: #B8C4BC">{{t.demoMode}}</span>
+    <div style="display: flex; background: #26302A; border-radius: 99px; padding: 3px; gap: 2px">
+      <button onClick="{{toCust}}" style="border: 0; border-radius: 99px; height: 30px; padding: 0 14px; font-size: 12px; cursor: pointer; {{modeCustStyle}}">{{t.modeCust}}</button>
+      <button onClick="{{toOwner}}" style="border: 0; border-radius: 99px; height: 30px; padding: 0 14px; font-size: 12px; cursor: pointer; {{modeOwnerStyle}}">{{t.modeOwner}}</button>
+    </div>
+  </div>
+
+  <div style="background: #FFFFFF; padding: 12px 16px 10px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; border-bottom: 1px solid #EEF0EC">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+        <div style="width: 40px; height: 40px; border-radius: 12px; background: #0B6B43; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 19px; flex-shrink: 0">{{t.logo}}</div>
+        <div style="min-width: 0">
+          <div style="font-weight: 800; font-size: 16px; line-height: 1.4">{{headTitle}}</div>
+          <div style="font-size: 12px; color: #5B655E; display: flex; align-items: center; gap: 4px; line-height: 1.5">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+            <span>{{headSub}}</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0">
+        <button aria-label="Language" onClick="{{toggleLang}}" style="height: 40px; padding: 0 12px; border-radius: 99px; border: 1px solid #E2E5E0; background: #FFFFFF; color: #121A15; font-size: 13px; font-weight: 700; cursor: pointer">{{t.langOther}}</button>
+        <sc-if value="{{isCustMode}}" hint-placeholder-val="{{true}}">
+          <button aria-label="{{t.tabCart}}" onClick="{{tabCart}}" style="width: 44px; height: 44px; border-radius: 99px; border: 0; background: #F3F4F1; color: #121A15; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 10.5a2 2 0 0 0 2 1.5h7.6a2 2 0 0 0 2-1.6L20.5 8H6"></path><circle cx="10" cy="20" r="1.4"></circle><circle cx="17" cy="20" r="1.4"></circle></svg>
+            <sc-if value="{{hasCart}}" hint-placeholder-val="{{false}}"><span class="n" style="position: absolute; top: 2px; right: 2px; background: #F07B1A; color: #FFFFFF; font-size: 10px; font-weight: 800; border-radius: 99px; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px">{{cartCount}}</span></sc-if>
+          </button>
+        </sc-if>
+      </div>
+    </div>
+    <sc-if value="{{showSearch}}" hint-placeholder-val="{{true}}">
+      <label style="display: flex; align-items: center; gap: 8px; background: #F3F4F1; border-radius: 99px; padding: 0 16px; height: 46px; color: #5B655E">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+        <input id="sq" value="{{sq}}" onChange="{{onSearch}}" placeholder="{{t.searchPh}}" aria-label="{{t.searchPh}}" style="border: 0; outline: none; flex: 1; min-width: 0; font-size: 14px; background: transparent; color: #121A15; height: 44px">
+      </label>
+    </sc-if>
+  </div>
+
+  <div class="scr" style="flex: 1; min-height: 0; overflow-y: auto; background: #FFFFFF">
+
+    <sc-if value="{{isShop}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex; flex-direction: column; gap: 22px; padding: 14px 0 24px">
+
+        <div class="scr" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px; scroll-snap-type: x mandatory">
+          <div style="flex-shrink: 0; width: 320px; height: 150px; border-radius: 20px; background: #0B6B43; color: #FFFFFF; display: flex; overflow: hidden; scroll-snap-align: center">
+            <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0">
+              <div>
+                <div style="font-size: 18px; font-weight: 800; line-height: 1.45">{{t.b1Title}}</div>
+                <div style="font-size: 12px; color: #CFE9DA; line-height: 1.6; margin-top: 2px">{{t.b1Sub}}</div>
+              </div>
+              <button onClick="{{tabList}}" style="align-self: flex-start; border: 0; background: #FFFFFF; color: #0B6B43; border-radius: 99px; height: 34px; padding: 0 14px; font-size: 12px; font-weight: 800; cursor: pointer">{{t.b1Btn}}</button>
+            </div>
+            <img src="images/banner-basket.webp" alt="" style="width: 140px; height: 150px; object-fit: cover; object-position: center; flex-shrink: 0">
+          </div>
+          <div style="flex-shrink: 0; width: 320px; height: 150px; border-radius: 20px; background: #FFE9CF; color: #3D2300; display: flex; overflow: hidden; scroll-snap-align: center">
+            <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0">
+              <div>
+                <div style="font-size: 18px; font-weight: 800; line-height: 1.45">{{t.b2Title}}</div>
+                <div style="font-size: 12px; color: #6B4A1C; line-height: 1.6; margin-top: 2px">{{t.b2Sub}}</div>
+              </div>
+              <button onClick="{{pickVeg}}" style="align-self: flex-start; border: 0; background: #121A15; color: #FFFFFF; border-radius: 99px; height: 34px; padding: 0 14px; font-size: 12px; font-weight: 800; cursor: pointer">{{t.b2Btn}}</button>
+            </div>
+            <img src="images/banner-delivery.webp" alt="" style="width: 140px; height: 150px; object-fit: cover; object-position: center; flex-shrink: 0">
+          </div>
+          <div style="flex-shrink: 0; width: 320px; height: 150px; border-radius: 20px; background: #F07B1A; color: #FFFFFF; display: flex; overflow: hidden; scroll-snap-align: center">
+            <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0">
+              <div>
+                <div style="font-size: 18px; font-weight: 800; line-height: 1.45">{{t.b3Title}}</div>
+                <div style="font-size: 12px; color: #FFF1E3; line-height: 1.6; margin-top: 2px">{{t.b3Sub}}</div>
+              </div>
+              <button onClick="{{tabKhata}}" style="align-self: flex-start; border: 0; background: #FFFFFF; color: #A84E00; border-radius: 99px; height: 34px; padding: 0 14px; font-size: 12px; font-weight: 800; cursor: pointer">{{t.b3Btn}}</button>
+            </div>
+            <div style="width: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+              <div style="width: 84px; height: 84px; border-radius: 26px; background: #FFFFFF; color: #F07B1A; display: flex; align-items: center; justify-content: center">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"></rect><path d="M10 18.5h4"></path><path d="M9.5 9.5l2 2 3.5-3.5"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px">
+            <div style="font-size: 18px; font-weight: 800">{{t.catTitle}}</div>
+            <sc-if value="{{hasCatFilter}}" hint-placeholder-val="{{false}}">
+              <button onClick="{{clearCat}}" style="border: 0; background: transparent; color: #0B6B43; font-size: 13px; font-weight: 700; cursor: pointer; height: 32px">{{t.seeAll}}</button>
+            </sc-if>
+          </div>
+          <div class="scr" style="display: flex; gap: 14px; overflow-x: auto; padding: 0 16px">
+            <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+              <button onClick="{{c.pick}}" style="flex-shrink: 0; width: 72px; border: 0; background: transparent; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; color: #121A15">
+                <span style="width: 68px; height: 68px; border-radius: 99px; background: #F4F1EA; overflow: hidden; display: block; box-sizing: border-box; {{c.ring}}"><img src="{{c.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></span>
+                <span style="font-size: 12px; line-height: 1.4; text-align: center; {{c.labelStyle}}">{{c.label}}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-if value="{{showDeals}}" hint-placeholder-val="{{true}}">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px">
+              <div style="font-size: 18px; font-weight: 800; letter-spacing: 0.01em">{{t.dealsTitle}}</div>
+              <span style="font-size: 11px; color: #A84E00; background: #FFF1E3; border-radius: 99px; padding: 3px 10px">{{t.demoPrices}}</span>
+            </div>
+            <div class="scr" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px">
+              <sc-for list="{{deals}}" as="p" hint-placeholder-count="3">
+                <div style="flex-shrink: 0; width: 148px; display: flex; flex-direction: column; gap: 4px">
+                  <div style="position: relative; width: 148px; height: 148px; background: #F4F1EA; border-radius: 18px; overflow: hidden">
+                    <img src="{{p.img}}" alt="{{p.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                    <span class="n" style="position: absolute; top: 8px; left: 8px; background: #0B4F33; color: #FFFFFF; font-size: 11px; font-weight: 800; border-radius: 8px; padding: 3px 7px">{{p.off}}</span>
+                    <sc-if value="{{p.notInCart}}" hint-placeholder-val="{{true}}">
+                      <button aria-label="{{p.addLabel}}" onClick="{{p.inc}}" style="position: absolute; bottom: 8px; right: 8px; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #FFFFFF; color: #121A15; box-shadow: 0 2px 8px rgba(18, 26, 21, 0.18); display: flex; align-items: center; justify-content: center; cursor: pointer">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                      </button>
+                    </sc-if>
+                    <sc-if value="{{p.inCart}}" hint-placeholder-val="{{false}}">
+                      <div style="position: absolute; bottom: 8px; left: 8px; right: 8px; height: 40px; border-radius: 99px; background: #0B6B43; color: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; box-shadow: 0 2px 8px rgba(18, 26, 21, 0.18)">
+                        <button aria-label="-" onClick="{{p.dec}}" style="width: 34px; height: 34px; border-radius: 99px; border: 0; background: transparent; color: #FFFFFF; font-size: 20px; font-weight: 700; cursor: pointer">−</button>
+                        <span class="n" style="font-weight: 800; font-size: 15px">{{p.q}}</span>
+                        <button aria-label="+" onClick="{{p.inc}}" style="width: 34px; height: 34px; border-radius: 99px; border: 0; background: transparent; color: #FFFFFF; font-size: 20px; font-weight: 700; cursor: pointer">+</button>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 4px">
+                    <span class="n" style="font-weight: 800; font-size: 15px">{{p.price}}</span>
+                    <span class="n" style="font-size: 12px; color: #8A938C; text-decoration: line-through">{{p.old}}</span>
+                  </div>
+                  <div style="font-size: 14px; line-height: 1.5">{{p.name}}</div>
+                  <div style="font-size: 12px; color: #6B746D">{{p.unit}}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+          <div style="font-size: 18px; font-weight: 800">{{gridTitle}}</div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px">
+            <sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+              <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+                <div style="position: relative; width: 100%; aspect-ratio: 1 / 1; background: #F4F1EA; border-radius: 18px; overflow: hidden">
+                  <img src="{{p.img}}" alt="{{p.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                  <sc-if value="{{p.hasOff}}" hint-placeholder-val="{{false}}">
+                    <span class="n" style="position: absolute; top: 8px; left: 8px; background: #0B4F33; color: #FFFFFF; font-size: 11px; font-weight: 800; border-radius: 8px; padding: 3px 7px">{{p.off}}</span>
+                  </sc-if>
+                  <sc-if value="{{p.notInCart}}" hint-placeholder-val="{{true}}">
+                    <button aria-label="{{p.addLabel}}" onClick="{{p.inc}}" style="position: absolute; bottom: 8px; right: 8px; width: 44px; height: 44px; border-radius: 99px; border: 0; background: #FFFFFF; color: #121A15; box-shadow: 0 2px 8px rgba(18, 26, 21, 0.18); display: flex; align-items: center; justify-content: center; cursor: pointer">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                    </button>
+                  </sc-if>
+                  <sc-if value="{{p.inCart}}" hint-placeholder-val="{{false}}">
+                    <div style="position: absolute; bottom: 8px; left: 8px; right: 8px; height: 44px; border-radius: 99px; background: #0B6B43; color: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; box-shadow: 0 2px 8px rgba(18, 26, 21, 0.18)">
+                      <button aria-label="-" onClick="{{p.dec}}" style="width: 38px; height: 38px; border-radius: 99px; border: 0; background: transparent; color: #FFFFFF; font-size: 20px; font-weight: 700; cursor: pointer">−</button>
+                      <span class="n" style="font-weight: 800; font-size: 15px">{{p.q}}</span>
+                      <button aria-label="+" onClick="{{p.inc}}" style="width: 38px; height: 38px; border-radius: 99px; border: 0; background: transparent; color: #FFFFFF; font-size: 20px; font-weight: 700; cursor: pointer">+</button>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 4px; flex-wrap: wrap">
+                  <span class="n" style="font-weight: 800; font-size: 15px">{{p.price}}</span>
+                  <sc-if value="{{p.hasOff}}" hint-placeholder-val="{{false}}"><span class="n" style="font-size: 12px; color: #8A938C; text-decoration: line-through">{{p.old}}</span></sc-if>
+                </div>
+                <div style="font-size: 14px; line-height: 1.5">{{p.name}}</div>
+                <div style="font-size: 12px; color: #6B746D">{{p.unit}}</div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{noProducts}}" hint-placeholder-val="{{false}}">
+            <div style="text-align: center; color: #6B746D; font-size: 14px; padding: 24px">{{t.noResults}}</div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{hasCart}}" hint-placeholder-val="{{false}}">
+          <div style="position: sticky; bottom: 12px; padding: 0 16px">
+            <button onClick="{{tabCart}}" style="width: 100%; border: 0; background: #0B6B43; color: #FFFFFF; border-radius: 99px; height: 56px; padding: 0 8px 0 20px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px rgba(11, 107, 67, 0.35)">
+              <span>{{t.viewCart}} · <span class="n">{{cartCount}}</span> {{t.items}}</span>
+              <span class="n" style="background: #FFFFFF; color: #0B6B43; border-radius: 99px; height: 42px; padding: 0 16px; display: flex; align-items: center; font-weight: 800">{{cartTotal}}</span>
+            </button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isCartEmpty}}" hint-placeholder-val="{{false}}">
+      <div style="padding: 48px 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+        <div style="width: 88px; height: 88px; border-radius: 99px; background: #F3F4F1; color: #0B6B43; display: flex; align-items: center; justify-content: center">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 10.5a2 2 0 0 0 2 1.5h7.6a2 2 0 0 0 2-1.6L20.5 8H6"></path><circle cx="10" cy="20" r="1.4"></circle><circle cx="17" cy="20" r="1.4"></circle></svg>
+        </div>
+        <div style="font-weight: 800; font-size: 18px">{{t.emptyCart}}</div>
+        <div style="color: #6B746D; font-size: 14px">{{t.emptyCartSub}}</div>
+        <button onClick="{{tabShop}}" style="margin-top: 10px; border: 0; background: #121A15; color: #FFFFFF; border-radius: 99px; height: 50px; padding: 0 28px; font-size: 15px; font-weight: 700; cursor: pointer">{{t.browse}}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isCartFull}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 18px; padding: 16px 16px 24px">
+        <div style="font-size: 20px; font-weight: 800">{{t.cartTitle}}</div>
+        <div style="display: flex; flex-direction: column">
+          <sc-for list="{{cartItems}}" as="ci" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EEF0EC">
+              <img src="{{ci.img}}" alt="" style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; background: #F4F1EA; flex-shrink: 0">
+              <div style="flex: 1; min-width: 0">
+                <div style="font-size: 14px; font-weight: 700">{{ci.name}}</div>
+                <div style="font-size: 12px; color: #6B746D">{{ci.unit}}</div>
+                <div class="n" style="font-size: 14px; font-weight: 800; margin-top: 2px; text-align: start">{{ci.line}}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 2px; border: 1px solid #E2E5E0; border-radius: 99px; padding: 2px">
+                <button aria-label="-" onClick="{{ci.dec}}" style="width: 34px; height: 34px; border-radius: 99px; border: 0; background: #F3F4F1; color: #121A15; font-size: 18px; font-weight: 700; cursor: pointer">−</button>
+                <span class="n" style="min-width: 24px; text-align: center; font-weight: 800">{{ci.q}}</span>
+                <button aria-label="+" onClick="{{ci.inc}}" style="width: 34px; height: 34px; border-radius: 99px; border: 0; background: #0B6B43; color: #FFFFFF; font-size: 18px; font-weight: 700; cursor: pointer">+</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div style="font-size: 16px; font-weight: 800">{{t.payHow}}</div>
+          <sc-for list="{{payOpts}}" as="po" hint-placeholder-count="3">
+            <button onClick="{{po.pick}}" style="width: 100%; text-align: start; border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; background: #FFFFFF; color: #121A15; {{po.box}}">
+              <span style="width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; flex-shrink: 0; {{po.iconStyle}}">{{po.icon}}</span>
+              <span style="flex: 1; min-width: 0">
+                <span style="display: block; font-size: 14px; font-weight: 700">{{po.title}}</span>
+                <span style="display: block; font-size: 12px; color: #6B746D; line-height: 1.5">{{po.sub}}</span>
+              </span>
+              <span style="width: 20px; height: 20px; border-radius: 99px; box-sizing: border-box; flex-shrink: 0; {{po.radio}}"></span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <label for="ccode" style="font-size: 13px; color: #5B655E">{{t.codeLabel}}</label>
+          <input id="ccode" class="n" value="{{codeInput}}" onChange="{{onCode}}" inputmode="numeric" style="height: 48px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 15px; background: #FFFFFF; color: #121A15">
+          <div style="font-size: 13px; color: #5B655E; margin-top: 6px">{{t.delivery}}</div>
+          <div style="display: flex; background: #F3F4F1; border-radius: 99px; padding: 4px; gap: 4px">
+            <button onClick="{{delHome}}" style="flex: 1; border: 0; border-radius: 99px; height: 40px; font-size: 13px; cursor: pointer; {{delHomeStyle}}">{{t.delHome}}</button>
+            <button onClick="{{delPick}}" style="flex: 1; border: 0; border-radius: 99px; height: 40px; font-size: 13px; cursor: pointer; {{delPickStyle}}">{{t.delPick}}</button>
+          </div>
+        </div>
+
+        <div style="background: #F7F8F6; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+          <div style="display: flex; justify-content: space-between"><span style="color: #5B655E">{{t.subtotal}}</span><span class="n">{{cartTotal}}</span></div>
+          <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; padding-top: 8px; border-top: 1px dashed #DADDD5"><span>{{t.total}}</span><span class="n">{{cartTotal}}</span></div>
+        </div>
+
+        <button onClick="{{placeOrder}}" style="border: 0; background: #0B6B43; color: #FFFFFF; border-radius: 99px; height: 56px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px">
+          <span>{{placeLabel}}</span><span class="n">· {{cartTotal}}</span>
+        </button>
+        <a href="{{waOrderLink}}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; border: 1.5px solid #D5DBD6; background: #FFFFFF; color: #121A15; border-radius: 99px; height: 50px; font-size: 14px; font-weight: 700">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0B6B43" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19L4 20z"></path><path d="M9 10c.5 2 2 3.5 4 4"></path></svg>
+          <span>{{t.waOrder}}</span>
+        </a>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isKhataLogin}}" hint-placeholder-val="{{false}}">
+      <div style="padding: 28px 20px; display: flex; flex-direction: column; gap: 12px">
+        <div style="width: 64px; height: 64px; border-radius: 20px; background: #E6F2EB; color: #0B6B43; display: flex; align-items: center; justify-content: center">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"></path><path d="M5 17a3 3 0 0 1 3-3h11"></path><path d="M9 8h6"></path></svg>
+        </div>
+        <div style="font-weight: 800; font-size: 22px">{{t.khataLoginTitle}}</div>
+        <div style="color: #5B655E; font-size: 14px; line-height: 1.8">{{t.khataLoginSub}}</div>
+        <label for="lcode" style="font-size: 13px; color: #5B655E; margin-top: 8px">{{t.khataNoLabel}}</label>
+        <input id="lcode" class="n" value="{{loginCode}}" onChange="{{onLogin}}" inputmode="numeric" placeholder="1023" style="height: 52px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 17px; background: #FFFFFF; color: #121A15">
+        <button onClick="{{doLogin}}" style="margin-top: 6px; border: 0; background: #121A15; color: #FFFFFF; border-radius: 99px; height: 54px; font-size: 15px; font-weight: 800; cursor: pointer">{{t.openKhata}}</button>
+        <div style="text-align: center; color: #6B746D; font-size: 12px; margin-top: 4px">{{t.demoCodes}}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isKhataView}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 24px">
+        <div style="background: #0B6B43; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <div style="width: 42px; height: 42px; border-radius: 99px; background: #FFFFFF; color: #0B6B43; display: flex; align-items: center; justify-content: center; font-weight: 800">{{k.initial}}</div>
+              <div>
+                <div style="font-weight: 800; font-size: 15px">{{k.name}}</div>
+                <div style="font-size: 12px; color: #CFE9DA">{{t.khataNo}} <span class="n">#{{k.code}}</span> · {{t.month}}</div>
+              </div>
+            </div>
+            <button onClick="{{doLogout}}" style="border: 1px solid rgba(255, 255, 255, 0.4); background: transparent; color: #FFFFFF; border-radius: 99px; height: 34px; padding: 0 12px; font-size: 12px; cursor: pointer">{{t.logout}}</button>
+          </div>
+          <div>
+            <div style="font-size: 12px; color: #CFE9DA">{{t.balanceLabel}}</div>
+            <div class="n" style="font-size: 36px; font-weight: 800; line-height: 1.25; text-align: start">{{k.bal}}</div>
+          </div>
+          <div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.22); border-radius: 99px; overflow: hidden"><div style="height: 100%; background: #FFC37A; border-radius: 99px; {{k.barStyle}}"></div></div>
+            <div style="font-size: 12px; color: #CFE9DA; margin-top: 6px">{{t.limit}}: <span class="n">{{k.limit}}</span></div>
+          </div>
+          <button onClick="{{payKhataNow}}" style="border: 0; background: #FFFFFF; color: #0B6B43; border-radius: 99px; height: 50px; font-size: 15px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"></rect><path d="M10 18.5h4"></path></svg>
+            <span>{{t.payNowBtn}}</span>
+          </button>
+        </div>
+
+        <sc-if value="{{k.hasPays}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="font-size: 16px; font-weight: 800">{{t.myPayments}}</div>
+            <sc-for list="{{k.pays}}" as="py" hint-placeholder-count="1">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid #EEF0EC; border-radius: 16px; padding: 12px 14px">
+                <div>
+                  <div style="font-size: 14px; font-weight: 700">{{py.methodLabel}}</div>
+                  <div class="n" style="font-size: 12px; color: #6B746D; text-align: start">TID {{py.tid}}</div>
+                </div>
+                <div style="text-align: end">
+                  <div class="n" style="font-weight: 800; font-size: 14px">{{py.amount}}</div>
+                  <span style="font-size: 11px; border-radius: 99px; padding: 2px 9px; {{py.chipStyle}}">{{py.chipLabel}}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{k.hasOrders}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="font-size: 16px; font-weight: 800">{{t.myOrders}}</div>
+            <sc-for list="{{k.orders}}" as="o" hint-placeholder-count="1">
+              <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #EEF0EC; border-radius: 16px; padding: 12px 14px; gap: 8px">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px"><span class="n" style="font-size: 14px; font-weight: 700">{{o.id}}</span><span style="font-size: 11px; border-radius: 99px; padding: 2px 9px; {{o.chipStyle}}">{{o.chipLabel}}</span></div>
+                  <div style="font-size: 12px; color: #6B746D">{{o.payLabel}}</div>
+                </div>
+                <span class="n" style="font-weight: 800; font-size: 14px">{{o.total}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 16px; font-weight: 800; margin-bottom: 4px">{{t.history}}</div>
+          <sc-for list="{{k.entries}}" as="e" hint-placeholder-count="4">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #EEF0EC; gap: 10px">
+              <div style="display: flex; align-items: center; gap: 12px; min-width: 0">
+                <div style="width: 40px; height: 40px; border-radius: 99px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800; flex-shrink: 0; {{e.iconStyle}}">{{e.sign}}</div>
+                <div style="min-width: 0">
+                  <div style="font-size: 14px">{{e.note}}</div>
+                  <div class="n" style="font-size: 12px; color: #6B746D; text-align: start">{{e.d}}</div>
+                </div>
+              </div>
+              <span class="n" style="font-weight: 800; font-size: 14px; {{e.amtStyle}}">{{e.amt}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 24px">
+        <div style="border-radius: 22px; overflow: hidden; background: #FFE9CF; display: flex">
+          <div style="flex: 1; padding: 18px; min-width: 0">
+            <div style="font-weight: 800; font-size: 18px; color: #3D2300; line-height: 1.45">{{t.listTitle}}</div>
+            <div style="font-size: 13px; color: #6B4A1C; line-height: 1.7; margin-top: 4px">{{t.listSub}}</div>
+          </div>
+          <img src="images/banner-basket.webp" alt="" style="width: 120px; object-fit: cover; flex-shrink: 0">
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 16px; font-weight: 800; margin-bottom: 4px">{{t.myList}}</div>
+          <sc-for list="{{favs}}" as="f" hint-placeholder-count="5">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #EEF0EC; gap: 10px">
+              <div style="display: flex; align-items: center; gap: 12px">
+                <img src="{{f.img}}" alt="" style="width: 52px; height: 52px; border-radius: 14px; object-fit: cover; background: #F4F1EA; flex-shrink: 0">
+                <div>
+                  <div style="font-size: 14px; font-weight: 700">{{f.name}}</div>
+                  <div style="font-size: 12px; color: #6B746D">{{f.unit}} × <span class="n">{{f.q}}</span></div>
+                </div>
+              </div>
+              <span class="n" style="font-weight: 800; font-size: 14px">{{f.line}}</span>
+            </div>
+          </sc-for>
+          <div style="display: flex; justify-content: space-between; padding-top: 12px; font-size: 16px">
+            <span style="font-weight: 800">{{t.estTotal}}</span>
+            <span class="n" style="font-weight: 800; color: #0B6B43">{{favTotal}}</span>
+          </div>
+        </div>
+        <button onClick="{{addAll}}" style="border: 0; background: #0B6B43; color: #FFFFFF; border-radius: 99px; height: 56px; font-size: 15px; font-weight: 800; cursor: pointer">{{t.addAll}}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isDash}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 18px; padding: 16px 16px 24px">
+        <div>
+          <div style="font-size: 20px; font-weight: 800">{{t.ownerHello}}</div>
+          <div style="font-size: 13px; color: #6B746D">{{t.ownerHelloSub}}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <div style="background: #0B6B43; color: #FFFFFF; border-radius: 20px; padding: 14px">
+            <div style="font-size: 12px; color: #CFE9DA">{{t.remaining}}</div>
+            <div class="n" style="font-size: 20px; font-weight: 800; margin-top: 4px; text-align: start">{{h.out}}</div>
+          </div>
+          <div style="background: #F7F8F6; border-radius: 20px; padding: 14px">
+            <div style="font-size: 12px; color: #5B655E">{{t.received}}</div>
+            <div class="n" style="font-size: 20px; font-weight: 800; margin-top: 4px; text-align: start">{{h.rec}}</div>
+          </div>
+          <div style="background: #FFF1E3; border-radius: 20px; padding: 14px">
+            <div style="font-size: 12px; color: #8A4A05">{{t.pendingPays}}</div>
+            <div class="n" style="font-size: 20px; font-weight: 800; margin-top: 4px; color: #A84E00; text-align: start">{{pendingCount}}</div>
+          </div>
+          <div style="background: #F7F8F6; border-radius: 20px; padding: 14px">
+            <div style="font-size: 12px; color: #5B655E">{{t.newOrdersLbl}}</div>
+            <div class="n" style="font-size: 20px; font-weight: 800; margin-top: 4px; text-align: start">{{newOrders}}</div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <div style="font-size: 16px; font-weight: 800">{{t.payInbox}}</div>
+            <span style="font-size: 11px; color: #5B655E">Easypaisa · JazzCash</span>
+          </div>
+          <sc-if value="{{noPendingPays}}" hint-placeholder-val="{{false}}">
+            <div style="border: 1px dashed #DADDD5; border-radius: 16px; padding: 16px; text-align: center; color: #6B746D; font-size: 13px">{{t.noPending}}</div>
+          </sc-if>
+          <sc-for list="{{pendingPays}}" as="py" hint-placeholder-count="1">
+            <div style="border: 1px solid #EEF0EC; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(18, 26, 21, 0.04)">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <div style="width: 40px; height: 40px; border-radius: 99px; background: #E6F2EB; color: #0B6B43; display: flex; align-items: center; justify-content: center; font-weight: 800">{{py.initial}}</div>
+                  <div>
+                    <div style="font-weight: 800; font-size: 14px">{{py.name}}</div>
+                    <div style="font-size: 12px; color: #6B746D">{{py.methodLabel}} · {{py.purposeLabel}}</div>
+                  </div>
+                </div>
+                <div class="n" style="font-weight: 800; font-size: 17px">{{py.amount}}</div>
+              </div>
+              <div class="n" style="font-size: 12px; color: #5B655E; background: #F7F8F6; border-radius: 10px; padding: 8px 10px; text-align: start">TID: {{py.tid}} · {{py.time}}</div>
+              <div style="display: flex; gap: 8px">
+                <button onClick="{{py.confirm}}" style="flex: 1; border: 0; background: #0B6B43; color: #FFFFFF; border-radius: 99px; height: 44px; font-size: 14px; font-weight: 800; cursor: pointer">{{t.confirmPay}}</button>
+                <button onClick="{{py.reject}}" style="border: 1px solid #E2E5E0; background: #FFFFFF; color: #B3261E; border-radius: 99px; height: 44px; padding: 0 16px; font-size: 14px; font-weight: 700; cursor: pointer">{{t.rejectPay}}</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 16px; font-weight: 800; margin-bottom: 4px">{{t.topDues}}</div>
+          <sc-for list="{{h.top}}" as="c" hint-placeholder-count="3">
+            <div style="padding: 10px 0; border-bottom: 1px solid #EEF0EC">
+              <div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{c.name}}</span><span class="n" style="font-weight: 800; color: #B3261E">{{c.bal}}</span></div>
+              <div style="height: 6px; background: #F3F4F1; border-radius: 99px; overflow: hidden; margin-top: 6px"><div style="height: 100%; background: #F07B1A; border-radius: 99px; {{c.barStyle}}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background: #121A15; color: #FFFFFF; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 8px">
+          <div style="font-weight: 800; font-size: 16px">{{t.billAllTitle}}</div>
+          <div style="font-size: 13px; color: #B8C4BC; line-height: 1.7">{{t.billAllSub}}</div>
+          <button onClick="{{billAll}}" style="margin-top: 4px; border: 0; background: #FFFFFF; color: #121A15; border-radius: 99px; height: 46px; font-size: 14px; font-weight: 800; cursor: pointer">{{t.billAll}}</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 16px; font-weight: 800; margin-bottom: 4px">{{t.stockAlert}}</div>
+          <sc-for list="{{h.stock}}" as="s" hint-placeholder-count="2">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #EEF0EC; gap: 10px">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <img src="{{s.img}}" alt="" style="width: 44px; height: 44px; border-radius: 12px; object-fit: cover; background: #F4F1EA">
+                <span style="font-size: 14px">{{s.name}}</span>
+              </div>
+              <span style="font-size: 12px; border-radius: 99px; padding: 3px 10px; {{s.style}}"><span class="n">{{s.q}}</span> {{t.left}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isOrders}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 24px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <div style="font-size: 20px; font-weight: 800">{{t.todayOrders}}</div>
+          <span style="font-size: 12px; color: #6B746D"><span class="n">{{orderCount}}</span> {{t.ordersWord}}</span>
+        </div>
+        <sc-for list="{{orders}}" as="o" hint-placeholder-count="2">
+          <div style="border: 1px solid #EEF0EC; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(18, 26, 21, 0.04)">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <div style="width: 40px; height: 40px; border-radius: 99px; background: #E6F2EB; color: #0B6B43; display: flex; align-items: center; justify-content: center; font-weight: 800">{{o.initial}}</div>
+                <div>
+                  <div style="font-weight: 800; font-size: 15px">{{o.custName}}</div>
+                  <div style="font-size: 12px; color: #6B746D"><span class="n">{{o.id}}</span> · <span class="n">{{o.time}}</span></div>
+                </div>
+              </div>
+              <span style="font-size: 11px; border-radius: 99px; padding: 3px 10px; white-space: nowrap; {{o.chipStyle}}">{{o.chipLabel}}</span>
+            </div>
+            <div class="scr" style="display: flex; gap: 6px; overflow-x: auto">
+              <sc-for list="{{o.thumbs}}" as="th" hint-placeholder-count="3">
+                <div style="position: relative; flex-shrink: 0">
+                  <img src="{{th.img}}" alt="{{th.name}}" style="width: 48px; height: 48px; border-radius: 12px; object-fit: cover; background: #F4F1EA; display: block">
+                  <span class="n" style="position: absolute; bottom: -4px; right: -4px; background: #121A15; color: #FFFFFF; font-size: 10px; font-weight: 800; border-radius: 99px; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px">{{th.q}}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size: 12px; color: #5B655E; line-height: 1.7">{{o.itemsText}}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 12px; color: #5B655E">{{o.payLabel}}</span>
+              <span class="n" style="font-weight: 800; font-size: 17px">{{o.total}}</span>
+            </div>
+            <sc-if value="{{o.hasAction}}" hint-placeholder-val="{{true}}">
+              <button onClick="{{o.advance}}" style="border: 0; border-radius: 99px; height: 46px; font-size: 14px; font-weight: 800; cursor: pointer; {{o.actionStyle}}">{{o.actionLabel}}</button>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isKhateList}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 24px">
+        <div style="background: #0B6B43; color: #FFFFFF; border-radius: 22px; padding: 18px">
+          <div style="font-size: 12px; color: #CFE9DA">{{t.outstanding}}</div>
+          <div class="n" style="font-size: 32px; font-weight: 800; line-height: 1.3; text-align: start">{{outTotal}}</div>
+          <div style="font-size: 12px; color: #CFE9DA"><span class="n">{{custCount}}</span> {{t.accounts}}</div>
+        </div>
+        <label style="display: flex; align-items: center; gap: 8px; background: #F3F4F1; border-radius: 99px; padding: 0 16px; height: 46px; color: #5B655E">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+          <input id="cq" value="{{cq}}" onChange="{{onCustSearch}}" placeholder="{{t.searchCust}}" aria-label="{{t.searchCust}}" style="border: 0; outline: none; flex: 1; min-width: 0; font-size: 14px; background: transparent; color: #121A15; height: 44px">
+        </label>
+        <sc-for list="{{custList}}" as="c" hint-placeholder-count="4">
+          <button onClick="{{c.open}}" style="width: 100%; text-align: start; background: #FFFFFF; border: 1px solid #EEF0EC; border-radius: 18px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; color: #121A15">
+            <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+              <div style="width: 44px; height: 44px; border-radius: 99px; background: #E6F2EB; color: #0B6B43; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0">{{c.initial}}</div>
+              <div style="min-width: 0">
+                <div style="font-weight: 800; font-size: 15px">{{c.name}}</div>
+                <div style="font-size: 12px; color: #6B746D">{{t.khataNo}} <span class="n">#{{c.code}}</span></div>
+                <sc-if value="{{c.near}}" hint-placeholder-val="{{false}}"><div style="font-size: 11px; color: #B3261E; margin-top: 2px">{{t.nearLimit}}</div></sc-if>
+              </div>
+            </div>
+            <span class="n" style="font-weight: 800; font-size: 15px; {{c.balStyle}}">{{c.bal}}</span>
+          </button>
+        </sc-for>
+        <button onClick="{{newCust}}" style="border: 1.5px dashed #B9C4BC; background: transparent; color: #0B6B43; border-radius: 99px; height: 50px; font-size: 14px; font-weight: 700; cursor: pointer">{{t.newCust}}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isKhateDetail}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 14px; padding: 12px 16px 24px">
+        <button onClick="{{closeCust}}" style="align-self: flex-start; border: 0; background: transparent; color: #0B6B43; font-size: 14px; font-weight: 700; cursor: pointer; height: 44px; padding: 0">{{t.backArrow}} {{t.back}}</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <div style="width: 48px; height: 48px; border-radius: 99px; background: #E6F2EB; color: #0B6B43; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">{{d.initial}}</div>
+            <div>
+              <div style="font-weight: 800; font-size: 17px">{{d.name}}</div>
+              <div class="n" style="font-size: 12px; color: #6B746D; text-align: start">{{d.ph}} · #{{d.code}}</div>
+            </div>
+          </div>
+          <div style="text-align: end">
+            <div style="font-size: 12px; color: #6B746D">{{t.balance}}</div>
+            <div class="n" style="font-size: 21px; font-weight: 800; {{d.balStyle}}">{{d.bal}}</div>
+          </div>
+        </div>
+        <div style="background: #F7F8F6; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+          <div style="font-weight: 800; font-size: 15px">{{t.newEntry}}</div>
+          <div style="display: flex; background: #FFFFFF; border-radius: 99px; padding: 4px; gap: 4px; border: 1px solid #EEF0EC">
+            <button onClick="{{typeU}}" style="flex: 1; border: 0; border-radius: 99px; height: 38px; font-size: 13px; cursor: pointer; {{typeUStyle}}">{{t.credit}}</button>
+            <button onClick="{{typeW}}" style="flex: 1; border: 0; border-radius: 99px; height: 38px; font-size: 13px; cursor: pointer; {{typeWStyle}}">{{t.payment}}</button>
+          </div>
+          <label for="eamt" style="font-size: 13px; color: #5B655E">{{t.amount}}</label>
+          <input id="eamt" class="n" value="{{eAmt}}" onChange="{{onAmt}}" inputmode="numeric" placeholder="1500" style="height: 46px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 15px; background: #FFFFFF; color: #121A15">
+          <label for="enote" style="font-size: 13px; color: #5B655E">{{t.note}}</label>
+          <input id="enote" value="{{eNote}}" onChange="{{onNote}}" placeholder="{{t.notePh}}" style="height: 46px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 15px; background: #FFFFFF; color: #121A15">
+          <button onClick="{{addEntry}}" style="margin-top: 4px; border: 0; border-radius: 99px; height: 48px; font-size: 15px; font-weight: 800; cursor: pointer; color: #FFFFFF; {{entryBtnStyle}}">{{entryBtnLabel}}</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div style="font-weight: 800; font-size: 15px">{{t.monthBill}}</div>
+          <div style="white-space: pre-wrap; background: #E9F6EE; border-radius: 16px; padding: 12px 14px; font-size: 13px; line-height: 1.8">{{d.bill}}</div>
+          <a href="{{d.waLink}}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; background: #0B6B43; color: #FFFFFF; border-radius: 99px; height: 50px; font-size: 15px; font-weight: 800">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19L4 20z"></path><path d="M9 10c.5 2 2 3.5 4 4"></path></svg>
+            <span>{{t.sendBill}}</span>
+          </a>
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <div style="font-weight: 800; font-size: 15px; margin-bottom: 4px">{{t.history}}</div>
+          <sc-for list="{{d.entries}}" as="e" hint-placeholder-count="4">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #EEF0EC; gap: 10px">
+              <div style="display: flex; align-items: center; gap: 12px; min-width: 0">
+                <div style="width: 40px; height: 40px; border-radius: 99px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800; flex-shrink: 0; {{e.iconStyle}}">{{e.sign}}</div>
+                <div style="min-width: 0">
+                  <div style="font-size: 14px">{{e.note}}</div>
+                  <div class="n" style="font-size: 12px; color: #6B746D; text-align: start">{{e.d}}</div>
+                </div>
+              </div>
+              <span class="n" style="font-weight: 800; font-size: 14px; {{e.amtStyle}}">{{e.amt}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <div style="background: #FFFFFF; border-top: 1px solid #EEF0EC; padding: 6px 8px 12px; flex-shrink: 0">
+    <sc-if value="{{isCustMode}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex">
+        <button onClick="{{tabShop}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; {{tc.shop}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path><path d="M10 21v-6h4v6"></path></svg>
+          <span>{{t.tabShop}}</span>
+        </button>
+        <button onClick="{{tabCart}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; {{tc.cart}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 10.5a2 2 0 0 0 2 1.5h7.6a2 2 0 0 0 2-1.6L20.5 8H6"></path><circle cx="10" cy="20" r="1.4"></circle><circle cx="17" cy="20" r="1.4"></circle></svg>
+          <span>{{t.tabCart}}</span>
+        </button>
+        <button onClick="{{tabKhata}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; {{tc.khata}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"></path><path d="M5 17a3 3 0 0 1 3-3h11"></path></svg>
+          <span>{{t.tabKhata}}</span>
+        </button>
+        <button onClick="{{tabList}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; {{tc.list}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11"></path><path d="M9 12h11"></path><path d="M9 18h11"></path><path d="M4 6h.01"></path><path d="M4 12h.01"></path><path d="M4 18h.01"></path></svg>
+          <span>{{t.tabList}}</span>
+        </button>
+      </div>
+    </sc-if>
+    <sc-if value="{{isOwnerMode}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex">
+        <button onClick="{{tabDash}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; position: relative; {{tc.dash}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>
+          <span>{{t.tabDash}}</span>
+          <sc-if value="{{hasPending}}" hint-placeholder-val="{{false}}"><span class="n" style="position: absolute; top: 2px; left: calc(50% + 6px); background: #F07B1A; color: #FFFFFF; font-size: 10px; font-weight: 800; border-radius: 99px; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px">{{pendingCount}}</span></sc-if>
+        </button>
+        <button onClick="{{tabOrders}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; position: relative; {{tc.orders}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"></path><path d="M3 7v10l9 4 9-4V7"></path><path d="M12 11v10"></path></svg>
+          <span>{{t.tabOrders}}</span>
+          <sc-if value="{{hasNewOrders}}" hint-placeholder-val="{{false}}"><span class="n" style="position: absolute; top: 2px; left: calc(50% + 6px); background: #B3261E; color: #FFFFFF; font-size: 10px; font-weight: 800; border-radius: 99px; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0 4px">{{newOrders}}</span></sc-if>
+        </button>
+        <button onClick="{{tabKhate}}" style="flex: 1; border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; {{tc.khate}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0"></path><path d="M16 4.5a3.5 3.5 0 0 1 0 7"></path><path d="M21.5 20a6.5 6.5 0 0 0-4-6"></path></svg>
+          <span>{{t.tabKhate}}</span>
+        </button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{sheetOpen}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; background: rgba(18, 26, 21, 0.5); display: flex; flex-direction: column; justify-content: flex-end">
+      <button aria-label="Close" onClick="{{closeSheet}}" style="flex: 1; border: 0; background: transparent; cursor: pointer"></button>
+      <div class="scr" style="background: #FFFFFF; border-radius: 26px 26px 0 0; padding: 10px 18px 22px; display: flex; flex-direction: column; gap: 12px; max-height: 760px; overflow-y: auto">
+        <div style="width: 44px; height: 5px; border-radius: 99px; background: #DADDD5; align-self: center"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <div style="font-size: 18px; font-weight: 800">{{t.sheetTitle}}</div>
+          <button aria-label="Close" onClick="{{closeSheet}}" style="width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F3F4F1; color: #121A15; font-size: 18px; cursor: pointer">×</button>
+        </div>
+        <div style="display: flex; background: #F3F4F1; border-radius: 99px; padding: 4px; gap: 4px">
+          <button onClick="{{mEp}}" style="flex: 1; border: 0; border-radius: 99px; height: 40px; font-size: 14px; cursor: pointer; {{mEpStyle}}">Easypaisa</button>
+          <button onClick="{{mJc}}" style="flex: 1; border: 0; border-radius: 99px; height: 40px; font-size: 14px; cursor: pointer; {{mJcStyle}}">JazzCash</button>
+        </div>
+        <div style="background: #0B6B43; color: #FFFFFF; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+          <div style="font-size: 12px; color: #CFE9DA">{{t.sendTo}}</div>
+          <div style="font-size: 16px; font-weight: 800">{{t.storeName}}</div>
+          <div class="n" style="font-size: 24px; font-weight: 800; letter-spacing: 0.04em; text-align: start">0300 0000000</div>
+          <div style="font-size: 11px; color: #CFE9DA">{{t.demoNumber}}</div>
+        </div>
+        <label for="pamt" style="font-size: 13px; color: #5B655E">{{t.amount}}</label>
+        <input id="pamt" class="n" value="{{payAmt}}" onChange="{{onPayAmt}}" inputmode="numeric" style="height: 52px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 20px; font-weight: 800; background: #FFFFFF; color: #121A15">
+        <div style="display: flex; flex-direction: column; gap: 8px; background: #F7F8F6; border-radius: 16px; padding: 12px 14px">
+          <sc-for list="{{steps}}" as="st" hint-placeholder-count="3">
+            <div style="display: flex; gap: 10px; align-items: flex-start">
+              <span class="n" style="width: 24px; height: 24px; border-radius: 99px; background: #121A15; color: #FFFFFF; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{st.n}}</span>
+              <span style="font-size: 13px; line-height: 1.7">{{st.text}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <label for="tid" style="font-size: 13px; color: #5B655E">{{t.tidLabel}}</label>
+        <input id="tid" class="n" value="{{tid}}" onChange="{{onTid}}" inputmode="numeric" placeholder="e.g. 41820593" style="height: 50px; border: 1px solid #E2E5E0; border-radius: 14px; padding: 0 14px; font-size: 16px; background: #FFFFFF; color: #121A15">
+        <button onClick="{{submitPay}}" style="border: 0; background: #121A15; color: #FFFFFF; border-radius: 99px; height: 54px; font-size: 15px; font-weight: 800; cursor: pointer">{{t.submitPay}}</button>
+        <div style="font-size: 11px; color: #6B746D; text-align: center; line-height: 1.6">{{t.payNote}}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="position: absolute; left: 20px; right: 20px; top: 56px; background: #121A15; color: #FFFFFF; padding: 12px 16px; border-radius: 16px; font-size: 13px; text-align: center; box-shadow: 0 10px 24px rgba(18, 26, 21, 0.3)">{{toast}}</div>
+  </sc-if>
+</div></template>
+<template id="tpl-pitch"><div dir="{{dir}}" lang="{{lang}}" style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F3F4EF; color: #15201A; overflow: hidden; font-family: {{font}}">
+  <div style="background: #0B5D3B; color: #FFFFFF; padding: 20px 18px 22px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div style="width: 44px; height: 44px; border-radius: 14px; background: #F2B33D; color: #3B2A00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px">{{t.logo}}</div>
+      <button aria-label="Language" onClick="{{toggleLang}}" style="height: 44px; padding: 0 14px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">{{t.langOther}}</button>
+    </div>
+    <div style="font-size: 24px; font-weight: 800; line-height: 1.5">{{t.title}}</div>
+    <div style="font-size: 14px; color: #D3EADC; line-height: 1.8">{{t.sub}}</div>
+  </div>
+  <div class="scr" style="flex: 1; min-height: 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+    <div style="background: #FFFFFF; border: 1px solid #E7E8E2; border-radius: 22px; padding: 16px">
+      <div style="font-size: 12px; font-weight: 700; color: #A12A1F; letter-spacing: 0.04em; margin-bottom: 8px">{{t.probH}}</div>
+      <sc-for list="{{probs}}" as="x" hint-placeholder-count="4">
+        <div style="display: flex; gap: 10px; align-items: flex-start; padding: 6px 0">
+          <div style="width: 22px; height: 22px; border-radius: 99px; background: #FBE9E7; color: #A12A1F; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 2px">!</div>
+          <div style="font-size: 14px; line-height: 1.7">{{x}}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E7E8E2; border-radius: 22px; padding: 16px">
+      <div style="font-size: 12px; font-weight: 700; color: #0B5D3B; letter-spacing: 0.04em; margin-bottom: 8px">{{t.solH}}</div>
+      <sc-for list="{{sols}}" as="x" hint-placeholder-count="6">
+        <div style="display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px dashed #E1E3DC">
+          <div style="width: 22px; height: 22px; border-radius: 99px; background: #E3F0E8; color: #0B5D3B; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700">{{x.h}}</div>
+            <div style="font-size: 13px; color: #4A534C; line-height: 1.7">{{x.b}}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background: #15201A; color: #FFFFFF; border-radius: 22px; padding: 16px">
+      <div style="font-size: 12px; font-weight: 700; color: #F2B33D; letter-spacing: 0.04em; margin-bottom: 8px">{{t.benH}}</div>
+      <sc-for list="{{bens}}" as="x" hint-placeholder-count="4">
+        <div style="font-size: 14px; line-height: 1.8; padding: 4px 0; color: #E6ECE8">• {{x}}</div>
+      </sc-for>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E7E8E2; border-radius: 22px; padding: 16px">
+      <div style="font-size: 12px; font-weight: 700; color: #7A4B00; letter-spacing: 0.04em; margin-bottom: 10px">{{t.phaseH}}</div>
+      <sc-for list="{{phases}}" as="x" hint-placeholder-count="3">
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0">
+          <div style="width: 30px; height: 30px; border-radius: 10px; background: #FCEFD6; color: #7A4B00; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 800; flex-shrink: 0">{{x.n}}</div>
+          <div style="font-size: 14px; line-height: 1.7; padding-top: 3px">{{x.t}}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align: center; font-size: 12px; color: #5D665F; padding: 6px 0 4px">{{t.by}}</div>
+  </div>
+</div></template>
+<script>
+(function(){
+  var current=null, pending=false;
+  function schedule(){ if(pending) return; pending=true; requestAnimationFrame(function(){ pending=false; paint(); }); }
+  window.DCLogic = class { constructor(props){ this.props=props||{}; this.state={}; }
+    setState(p){ var v = typeof p==='function' ? p(this.state) : p; this.state=Object.assign({}, this.state, v); schedule(); }
+    forceUpdate(){ schedule(); } };
+  var MainC = (function(){ class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.P = [
+      {id:1,c:'grain',img:'images/flour.webp',n:['چکی آٹا','Chakki Atta'],u:['10 کلو','10 kg'],p:1150,o:1250},
+      {id:2,c:'grain',img:'images/rice.webp',n:['سیلا چاول','Sella Rice'],u:['1 کلو','1 kg'],p:340},
+      {id:3,c:'oil',img:'images/ghee.webp',n:['گھی','Cooking Ghee'],u:['1 کلو','1 kg'],p:560,o:620},
+      {id:4,c:'oil',img:'images/oil.webp',n:['کوکنگ آئل','Cooking Oil'],u:['1 لیٹر','1 litre'],p:590,o:650},
+      {id:5,c:'dal',img:'images/chana-dal.webp',n:['دال چنا','Chana Dal'],u:['1 کلو','1 kg'],p:290},
+      {id:6,c:'dal',img:'images/masoor-dal.webp',n:['دال مسور','Masoor Dal'],u:['1 کلو','1 kg'],p:320},
+      {id:7,c:'tea',img:'images/sugar.webp',n:['چینی','Sugar'],u:['1 کلو','1 kg'],p:165},
+      {id:8,c:'tea',img:'images/tea.webp',n:['چائے پتی','Tea Leaves'],u:['475 گرام','475 g'],p:850,o:950},
+      {id:9,c:'clean',img:'images/washing-powder.webp',n:['سرف','Washing Powder'],u:['1 کلو','1 kg'],p:420,o:480},
+      {id:10,c:'clean',img:'images/soap.webp',n:['نہانے کا صابن','Bath Soap'],u:['2 عدد','2 bars'],p:220},
+      {id:11,c:'kids',img:'images/baby-milk.webp',n:['بچوں کا دودھ','Baby Milk'],u:['400 گرام','400 g'],p:1450},
+      {id:12,c:'kids',img:'images/biscuits.webp',n:['بسکٹ','Biscuits'],u:['فیملی پیک','Family pack'],p:150},
+      {id:13,c:'dairy',img:'images/milk.webp',n:['دودھ','Milk'],u:['1 لیٹر','1 litre'],p:230},
+      {id:14,c:'dairy',img:'images/eggs.webp',n:['انڈے','Eggs'],u:['1 درجن','1 dozen'],p:380,o:420},
+      {id:15,c:'kids',img:'images/bread.webp',n:['ڈبل روٹی','Bread'],u:['بڑی','Large'],p:180},
+      {id:16,c:'veg',img:'images/potatoes.webp',n:['آلو','Potatoes'],u:['1 کلو','1 kg'],p:90},
+      {id:17,c:'veg',img:'images/onions.webp',n:['پیاز','Onions'],u:['1 کلو','1 kg'],p:140},
+      {id:18,c:'veg',img:'images/tomatoes.webp',n:['ٹماٹر','Tomatoes'],u:['1 کلو','1 kg'],p:160},
+      {id:19,c:'spice',img:'images/chili.webp',n:['لال مرچ','Red Chili'],u:['200 گرام','200 g'],p:260}
+    ];
+    this.CATS = [
+      {k:'veg',l:['سبزیاں','Vegetables'],img:'images/tomatoes.webp'},
+      {k:'dairy',l:['دودھ و انڈے','Milk & Eggs'],img:'images/eggs.webp'},
+      {k:'grain',l:['آٹا و چاول','Atta & Rice'],img:'images/flour.webp'},
+      {k:'oil',l:['گھی و تیل','Ghee & Oil'],img:'images/oil.webp'},
+      {k:'dal',l:['دالیں','Daal'],img:'images/masoor-dal.webp'},
+      {k:'tea',l:['چائے و چینی','Tea & Sugar'],img:'images/tea.webp'},
+      {k:'spice',l:['مصالحے','Spices'],img:'images/chili.webp'},
+      {k:'clean',l:['صفائی','Cleaning'],img:'images/washing-powder.webp'},
+      {k:'kids',l:['بیکری و بچے','Bakery & Kids'],img:'images/biscuits.webp'}
+    ];
+    this.FAV = [[1,1],[3,2],[7,5],[5,2],[8,1],[9,1],[13,4]];
+    this.STOCK = [[11,3],[8,6],[14,4]];
+    this.T = {
+      ur: {
+        logo:'م', storeName:'ممتاز جنرل اسٹور', langOther:'EN', demoMode:'ڈیمو — دیکھیں بطور:',
+        modeCust:'گاہک', modeOwner:'دکاندار', custSub:'منصر کیمپ · گھر تک ڈیلیوری', ownerTitle:'دکاندار پینل', ownerSub:'ممتاز جنرل اسٹور · منصر کیمپ',
+        searchPh:'آٹا، دودھ، انڈے تلاش کریں…', tabShop:'ہوم', tabCart:'ٹوکری', tabKhata:'کھاتہ', tabList:'ماہانہ لسٹ',
+        tabDash:'ڈیش بورڈ', tabOrders:'آرڈرز', tabKhate:'کھاتے',
+        b1Title:'مہینے کا راشن، ایک ٹچ میں', b1Sub:'اپنی لسٹ ایک بار بنائیں، ہر مہینے دوبارہ منگوائیں', b1Btn:'لسٹ دیکھیں',
+        b2Title:'گھر تک ڈیلیوری', b2Sub:'آرڈر کریں، دکان سے پیک ہو کر آپ کے دروازے تک', b2Btn:'سبزیاں دیکھیں',
+        b3Title:'کھاتہ اب موبائل سے ادا کریں', b3Sub:'Easypaisa یا JazzCash سے گھر بیٹھے ادائیگی', b3Btn:'میرا کھاتہ',
+        catTitle:'کیٹیگریز', seeAll:'سب دیکھیں', dealsTitle:'آج کی بچت', demoPrices:'نمونہ قیمتیں', allItems:'سب سامان',
+        noResults:'کچھ نہیں ملا', add:'شامل کریں', viewCart:'ٹوکری دیکھیں', items:'چیزیں', off:'کم',
+        cartTitle:'آپ کی ٹوکری', emptyCart:'ٹوکری خالی ہے', emptyCartSub:'ہوم سے سامان شامل کریں', browse:'خریداری شروع کریں',
+        payHow:'ادائیگی کا طریقہ', pKhata:'کھاتے میں لکھیں', pKhataSub:'مہینے کے آخر میں حساب', pCash:'ڈیلیوری پر نقد', pCashSub:'سامان ملنے پر رقم دیں',
+        pEp:'Easypaisa / JazzCash', pEpSub:'ابھی موبائل سے ادائیگی', codeLabel:'کھاتہ نمبر (ڈیمو: 1023)', delivery:'ڈیلیوری',
+        delHome:'گھر پہنچائیں', delPick:'خود لے لوں گا', subtotal:'سامان', total:'کل رقم', placeOrder:'آرڈر کریں', placeAndPay:'آرڈر کریں اور ادا کریں',
+        waOrder:'WhatsApp پر آرڈر بھیجیں',
+        khataLoginTitle:'اپنا کھاتہ دیکھیں', khataLoginSub:'ہر خریداری اور ادائیگی کا حساب آپ کے موبائل پر — کوئی جھگڑا نہیں، کوئی بھول نہیں۔',
+        khataNoLabel:'کھاتہ نمبر', openKhata:'کھاتہ کھولیں', demoCodes:'ڈیمو کھاتے: 1023 · 1031 · 1044 · 1052',
+        balanceLabel:'اس مہینے کا بقایا', limit:'حد', khataNo:'کھاتہ', month:'نومبر', logout:'باہر', payNowBtn:'Easypaisa / JazzCash سے ادا کریں',
+        myPayments:'میری ادائیگیاں', myOrders:'میرے آرڈر', history:'تفصیل',
+        listTitle:'ہر مہینے کا راشن — ایک ٹچ میں', listSub:'لسٹ ایک بار بنائیں، ہر مہینے ایک بٹن سے منگوائیں', myList:'میری ماہانہ لسٹ',
+        estTotal:'اندازاً کل', addAll:'پوری لسٹ ٹوکری میں ڈالیں',
+        statNew:'نیا', statPack:'پیک ہو رہا', statDone:'پہنچ گیا', accept:'قبول کریں — پیکنگ شروع', delivered:'ڈیلیور ہو گیا', deliveredKhata:'ڈیلیور ہو گیا — کھاتے میں لکھیں',
+        todayOrders:'آرڈرز', ordersWord:'آرڈر', onKhata:'کھاتے میں', cash:'نقد', epPaid:'Easypaisa — ادا شدہ', epWait:'Easypaisa — تصدیق باقی',
+        ownerHello:'السلام علیکم، ممتاز صاحب', ownerHelloSub:'آج دکان کا حال ایک نظر میں', remaining:'باقی اُدھار', received:'وصولی (نومبر)',
+        pendingPays:'تصدیق باقی ادائیگیاں', newOrdersLbl:'نئے آرڈر', payInbox:'موبائل ادائیگیاں', noPending:'کوئی ادائیگی تصدیق کے لیے باقی نہیں',
+        confirmPay:'تصدیق کریں', rejectPay:'رد', forKhata:'کھاتے کی ادائیگی', forOrder:'آرڈر کی ادائیگی',
+        topDues:'سب سے زیادہ بقایا', billAllTitle:'ایک بٹن — سب کو بل', billAllSub:'مہینے کے آخر میں سب گاہکوں کو ان کا حساب WhatsApp پر۔ رجسٹر جوڑنے کی ضرورت ختم۔',
+        billAll:'سب کو بل بھیجیں', stockAlert:'اسٹاک الرٹ', left:'باقی',
+        outstanding:'کل اُدھار بازار میں', accounts:'کھاتے', searchCust:'نام یا کھاتہ نمبر', nearLimit:'حد کے قریب', newCust:'+ نیا گاہک',
+        back:'تمام کھاتے', backArrow:'→', balance:'بقایا', newEntry:'نئی انٹری', credit:'اُدھار سامان', payment:'وصولی', amount:'رقم', note:'تفصیل',
+        notePh:'مثلاً آٹا، چینی', saveCredit:'اُدھار لکھیں', savePay:'وصولی لکھیں', monthBill:'مہینے کا بل', sendBill:'WhatsApp پر بل بھیجیں',
+        sheetTitle:'موبائل سے ادائیگی', sendTo:'اس اکاؤنٹ میں رقم بھیجیں', demoNumber:'ڈیمو نمبر — اصل ایپ میں دکان کا نمبر ہوگا',
+        step1:'اپنی {m} ایپ کھولیں اور "Send Money" دبائیں', step2:'اوپر والے نمبر پر رقم بھیجیں', step3:'ملنے والا ٹرانزیکشن آئی ڈی (TID) نیچے لکھیں',
+        tidLabel:'ٹرانزیکشن آئی ڈی (TID)', submitPay:'تصدیق کے لیے بھیجیں', payNote:'دکاندار اپنے اکاؤنٹ میں رقم دیکھ کر تصدیق کرے گا، پھر کھاتہ خود اپڈیٹ ہو جائے گا۔',
+        pPending:'تصدیق باقی', pOk:'تصدیق ہو گئی', pRej:'رد',
+        tNotFound:'یہ کھاتہ نمبر نہیں ملا — 1023 آزمائیں', tPlaced:'آرڈر دکان پر پہنچ گیا — "دکاندار" کھول کر دیکھیں', tPlacedPay:'آرڈر ہو گیا — اب ادائیگی مکمل کریں',
+        tAccepted:'گاہک کو اطلاع: آرڈر پیک ہو رہا ہے', tDelKhata:'ڈیلیور — رقم خود بخود کھاتے میں لکھ دی', tDel:'آرڈر مکمل',
+        tEnterAmt:'رقم ڈالیں', tEnterTid:'TID لکھیں', tCredit:'اُدھار لکھ دیا — گاہک کو ایپ پر نظر آئے گا', tPay:'وصولی لکھ دی',
+        tBills:'سب گاہکوں کے بل تیار (ڈیمو)', tList:'پوری لسٹ ٹوکری میں ڈال دی', tNewCust:'نیا کھاتہ: نام، فون، حد (ڈیمو)',
+        tPaySent:'ادائیگی بھیج دی — دکاندار تصدیق کرے گا', tPayOk:'تصدیق ہو گئی — کھاتہ اپڈیٹ ہو گیا', tPayOkOrder:'تصدیق ہو گئی — آرڈر ادا شدہ', tPayRej:'ادائیگی رد کر دی',
+        billHi:'السلام علیکم', billSir:'صاحب', billHead:'— نومبر کا حساب', billGoods:'سامان', billPay:'وصولی', billTotal:'کل بقایا', billThanks:'شکریہ — اپنا کھاتہ ایپ پر بھی دیکھ سکتے ہیں',
+        waHead:'آرڈر', waTotal:'کل', waPay:'ادائیگی', waDel:'ڈیلیوری', epNote:'Easypaisa وصولی', jcNote:'JazzCash وصولی'
+      },
+      en: {
+        logo:'M', storeName:'Mumtaz General Store', langOther:'اردو', demoMode:'Demo — view as:',
+        modeCust:'Customer', modeOwner:'Shopkeeper', custSub:'Mansar Camp · Home delivery', ownerTitle:'Shopkeeper panel', ownerSub:'Mumtaz General Store · Mansar Camp',
+        searchPh:'Search atta, milk, eggs…', tabShop:'Home', tabCart:'Cart', tabKhata:'Khata', tabList:'Monthly',
+        tabDash:'Dashboard', tabOrders:'Orders', tabKhate:'Ledgers',
+        b1Title:'Monthly groceries in one tap', b1Sub:'Save your list once, reorder it every month', b1Btn:'See list',
+        b2Title:'Delivered to your door', b2Sub:'Order now — packed at the store and brought to your home', b2Btn:'Shop vegetables',
+        b3Title:'Pay your khata from your phone', b3Sub:'Pay with Easypaisa or JazzCash from home', b3Btn:'My khata',
+        catTitle:'Shop by category', seeAll:'See all', dealsTitle:'Today’s savings', demoPrices:'Sample prices', allItems:'All items',
+        noResults:'Nothing found', add:'Add', viewCart:'View cart', items:'items', off:'off',
+        cartTitle:'Your cart', emptyCart:'Your cart is empty', emptyCartSub:'Add items from Home', browse:'Start shopping',
+        payHow:'Payment method', pKhata:'Add to khata', pKhataSub:'Settle at month end', pCash:'Cash on delivery', pCashSub:'Pay when the goods arrive',
+        pEp:'Easypaisa / JazzCash', pEpSub:'Pay now from your phone', codeLabel:'Khata number (demo: 1023)', delivery:'Delivery',
+        delHome:'Home delivery', delPick:'I will pick up', subtotal:'Items', total:'Total', placeOrder:'Place order', placeAndPay:'Order & pay',
+        waOrder:'Send order on WhatsApp',
+        khataLoginTitle:'See your khata', khataLoginSub:'Every purchase and payment on your phone — no disputes, nothing forgotten.',
+        khataNoLabel:'Khata number', openKhata:'Open khata', demoCodes:'Demo accounts: 1023 · 1031 · 1044 · 1052',
+        balanceLabel:'Balance this month', limit:'Limit', khataNo:'Khata', month:'November', logout:'Log out', payNowBtn:'Pay with Easypaisa / JazzCash',
+        myPayments:'My payments', myOrders:'My orders', history:'History',
+        listTitle:'Monthly groceries in one tap', listSub:'Save your list once, reorder it every month with one button', myList:'My monthly list',
+        estTotal:'Estimated total', addAll:'Add whole list to cart',
+        statNew:'New', statPack:'Packing', statDone:'Delivered', accept:'Accept — start packing', delivered:'Mark delivered', deliveredKhata:'Delivered — add to khata',
+        todayOrders:'Orders', ordersWord:'orders', onKhata:'On khata', cash:'Cash', epPaid:'Easypaisa — paid', epWait:'Easypaisa — awaiting check',
+        ownerHello:'Assalam-o-Alaikum, Mumtaz sahib', ownerHelloSub:'Your store at a glance', remaining:'Credit outstanding', received:'Received (Nov)',
+        pendingPays:'Payments to verify', newOrdersLbl:'New orders', payInbox:'Mobile payments', noPending:'No payments waiting for verification',
+        confirmPay:'Confirm', rejectPay:'Reject', forKhata:'Khata payment', forOrder:'Order payment',
+        topDues:'Highest balances', billAllTitle:'One tap — bills to everyone', billAllSub:'Send every customer their month-end statement on WhatsApp. No more adding up the register.',
+        billAll:'Send all bills', stockAlert:'Stock alert', left:'left',
+        outstanding:'Total credit outstanding', accounts:'accounts', searchCust:'Name or khata no.', nearLimit:'Near limit', newCust:'+ New customer',
+        back:'All ledgers', backArrow:'←', balance:'Balance', newEntry:'New entry', credit:'Credit sale', payment:'Payment', amount:'Amount', note:'Details',
+        notePh:'e.g. flour, sugar', saveCredit:'Add credit', savePay:'Record payment', monthBill:'Monthly bill', sendBill:'Send bill on WhatsApp',
+        sheetTitle:'Pay from your phone', sendTo:'Send the money to this account', demoNumber:'Demo number — the real app will show the store’s number',
+        step1:'Open your {m} app and tap "Send Money"', step2:'Send the amount to the number above', step3:'Type the Transaction ID (TID) you receive below',
+        tidLabel:'Transaction ID (TID)', submitPay:'Send for verification', payNote:'The shopkeeper checks the money in their account and confirms; your khata then updates automatically.',
+        pPending:'Awaiting check', pOk:'Confirmed', pRej:'Rejected',
+        tNotFound:'Khata number not found — try 1023', tPlaced:'Order sent to the store — open "Shopkeeper" to see it', tPlacedPay:'Order placed — now complete the payment',
+        tAccepted:'Customer notified: order is being packed', tDelKhata:'Delivered — amount added to khata automatically', tDel:'Order completed',
+        tEnterAmt:'Enter an amount', tEnterTid:'Enter the TID', tCredit:'Credit added — the customer sees it in their app', tPay:'Payment recorded',
+        tBills:'Bills ready for all customers (demo)', tList:'Whole list added to cart', tNewCust:'New khata: name, phone, limit (demo)',
+        tPaySent:'Payment sent — the shopkeeper will verify it', tPayOk:'Confirmed — khata updated', tPayOkOrder:'Confirmed — order marked paid', tPayRej:'Payment rejected',
+        billHi:'Assalam-o-Alaikum', billSir:'', billHead:'— November statement', billGoods:'Goods', billPay:'Paid', billTotal:'Total balance', billThanks:'Thank you — you can also see your khata in the app',
+        waHead:'Order', waTotal:'Total', waPay:'Payment', waDel:'Delivery', epNote:'Easypaisa payment', jcNote:'JazzCash payment'
+      }
+    };
+    this.state = {
+      lang:'ur', mode:'cust', ctab:'shop', otab:'dash', cat:'all', sq:'', cq:'', cart:{}, me:null,
+      pay:'khata', del:'home', codeInput:'1023', loginCode:'', openCust:null, eType:'u', eAmt:'', eNote:'', toast:'', seq:119, pseq:3,
+      sheet:null, method:'ep', payAmt:'', tid:'',
+      customers: [
+        {code:'1023',n:['محمد اسلم','Muhammad Aslam'],ph:'0300-0000001',limit:25000,entries:[
+          {d:'02 Nov',t:'u',a:3450,note:['آٹا، گھی، چینی','Flour, ghee, sugar']},
+          {d:'06 Nov',t:'u',a:1280,note:['دالیں، صابن','Lentils, soap']},
+          {d:'10 Nov',t:'w',a:5000,note:['نقد وصولی','Cash received']},
+          {d:'13 Nov',t:'u',a:2760,note:['چائے پتی، چاول، تیل','Tea, rice, oil']},
+          {d:'16 Nov',t:'u',a:940,note:['بسکٹ، صابن','Biscuits, soap']}]},
+        {code:'1031',n:['حاجی رفیق','Haji Rafiq'],ph:'0300-0000002',limit:40000,entries:[
+          {d:'01 Nov',t:'u',a:8200,note:['مہینے کا راشن','Monthly groceries']},
+          {d:'09 Nov',t:'u',a:2150,note:['گھی، چینی','Ghee, sugar']},
+          {d:'15 Nov',t:'u',a:3400,note:['آٹا، دالیں','Flour, lentils']}]},
+        {code:'1044',n:['بشیر احمد','Bashir Ahmed'],ph:'0300-0000003',limit:20000,entries:[
+          {d:'03 Nov',t:'u',a:4100,note:['راشن','Groceries']},
+          {d:'12 Nov',t:'w',a:4100,note:['Easypaisa وصولی','Easypaisa payment']}]},
+        {code:'1052',n:['ظفر اقبال','Zafar Iqbal'],ph:'0300-0000004',limit:15000,entries:[
+          {d:'05 Nov',t:'u',a:6700,note:['راشن، بچوں کا دودھ','Groceries, baby milk']},
+          {d:'14 Nov',t:'u',a:5900,note:['آٹا، گھی، تیل','Flour, ghee, oil']}]}
+      ],
+      orders: [
+        {id:'A-118',cust:'1031',items:[[1,2],[7,3],[3,1]],total:3355,pay:'khata',st:'pack',time:'10:40'},
+        {id:'A-117',cust:'1044',items:[[5,2],[10,1],[14,1]],total:1180,pay:'cash',st:'done',time:'09:15'}
+      ],
+      payments: [
+        {id:'P-2',cust:'1031',amount:5000,method:'ep',tid:'41820593',st:'pending',purpose:'khata',time:'11:05'},
+        {id:'P-1',cust:'1052',amount:3000,method:'jc',tid:'77310482',st:'pending',purpose:'khata',time:'08:50'}
+      ]
+    };
+  }
+  componentWillUnmount() { clearTimeout(this.tt); }
+  say(key) {
+    const msg = this.T[this.state.lang][key];
+    clearTimeout(this.tt);
+    this.setState({toast: msg});
+    this.tt = setTimeout(() => this.setState({toast: ''}), 2400);
+  }
+  prod(id) { return this.P.find(x => String(x.id) === String(id)); }
+  chg(id, d) {
+    const cart = Object.assign({}, this.state.cart);
+    cart[id] = (cart[id] || 0) + d;
+    if (cart[id] <= 0) delete cart[id];
+    this.setState({cart: cart});
+  }
+  today() { return new Date().toLocaleDateString('en-GB', {day: '2-digit', month: 'short'}); }
+  now() { const d = new Date(); return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+  placeOrder() {
+    const s = this.state;
+    const code = String(s.codeInput || '').trim();
+    if (!s.customers.find(c => c.code === code)) { this.say('tNotFound'); return; }
+    const items = Object.keys(s.cart).map(id => [Number(id), s.cart[id]]);
+    const total = items.reduce((t, it) => t + this.prod(it[0]).p * it[1], 0);
+    const id = 'A-' + s.seq;
+    const o = {id: id, cust: code, items: items, total: total, pay: s.pay, st: 'new', time: this.now(), paid: false};
+    const next = {orders: [o].concat(s.orders), seq: s.seq + 1, cart: {}, me: code, ctab: 'khata'};
+    if (s.pay === 'ep') { next.sheet = {purpose: 'order', orderId: id}; next.payAmt = String(total); next.tid = ''; }
+    this.setState(next);
+    this.say(s.pay === 'ep' ? 'tPlacedPay' : 'tPlaced');
+  }
+  submitPay() {
+    const s = this.state;
+    const a = Number(s.payAmt);
+    if (!a || a <= 0) { this.say('tEnterAmt'); return; }
+    if (!String(s.tid || '').trim()) { this.say('tEnterTid'); return; }
+    const p = {id: 'P-' + s.pseq, cust: s.me, amount: a, method: s.method, tid: String(s.tid).trim(), st: 'pending',
+      purpose: s.sheet && s.sheet.purpose === 'order' ? 'order' : 'khata', orderId: s.sheet && s.sheet.orderId, time: this.now()};
+    this.setState({payments: [p].concat(s.payments), pseq: s.pseq + 1, sheet: null, tid: ''});
+    this.say('tPaySent');
+  }
+  confirmPay(id) {
+    const s = this.state;
+    const p = s.payments.find(x => x.id === id);
+    let customers = s.customers, orders = s.orders;
+    if (p.purpose === 'khata') {
+      const note = p.method === 'ep' ? ['Easypaisa وصولی · TID ' + p.tid, 'Easypaisa payment · TID ' + p.tid] : ['JazzCash وصولی · TID ' + p.tid, 'JazzCash payment · TID ' + p.tid];
+      customers = customers.map(c => c.code !== p.cust ? c : Object.assign({}, c, {entries: c.entries.concat([{d: this.today(), t: 'w', a: p.amount, note: note}])}));
+    } else {
+      orders = orders.map(o => o.id !== p.orderId ? o : Object.assign({}, o, {paid: true}));
+    }
+    this.setState({customers: customers, orders: orders, payments: s.payments.map(x => x.id !== id ? x : Object.assign({}, x, {st: 'ok'}))});
+    this.say(p.purpose === 'khata' ? 'tPayOk' : 'tPayOkOrder');
+  }
+  rejectPay(id) {
+    this.setState({payments: this.state.payments.map(x => x.id !== id ? x : Object.assign({}, x, {st: 'rej'}))});
+    this.say('tPayRej');
+  }
+  advance(id) {
+    const s = this.state;
+    let key = 'tDel';
+    let customers = s.customers;
+    const orders = s.orders.map(o => {
+      if (o.id !== id) return o;
+      if (o.st === 'new') { key = 'tAccepted'; return Object.assign({}, o, {st: 'pack'}); }
+      if (o.pay === 'khata') {
+        key = 'tDelKhata';
+        customers = customers.map(c => c.code !== o.cust ? c : Object.assign({}, c, {entries: c.entries.concat([{d: this.today(), t: 'u', a: o.total, note: ['آرڈر ' + o.id, 'Order ' + o.id]}])}));
+      }
+      return Object.assign({}, o, {st: 'done'});
+    });
+    this.setState({orders: orders, customers: customers});
+    this.say(key);
+  }
+  addEntry() {
+    const s = this.state;
+    const a = Number(s.eAmt);
+    if (!a || a <= 0) { this.say('tEnterAmt'); return; }
+    const L = this.T[s.lang];
+    const note = s.eNote.trim() || (s.eType === 'u' ? L.credit : L.payment);
+    const customers = s.customers.map(c => c.code !== s.openCust ? c : Object.assign({}, c, {entries: c.entries.concat([{d: this.today(), t: s.eType, a: a, note: [note, note]}])}));
+    this.setState({customers: customers, eAmt: '', eNote: ''});
+    this.say(s.eType === 'u' ? 'tCredit' : 'tPay');
+  }
+  addAll() {
+    const cart = Object.assign({}, this.state.cart);
+    this.FAV.forEach(f => { cart[f[0]] = (cart[f[0]] || 0) + f[1]; });
+    this.setState({cart: cart, ctab: 'cart'});
+    this.say('tList');
+  }
+  renderVals() {
+    const s = this.state, P = this.P;
+    const li = s.lang === 'ur' ? 0 : 1;
+    const t = this.T[s.lang];
+    const fmt = n => 'Rs ' + Math.round(n).toLocaleString('en-US');
+    const bal = c => c.entries.reduce((x, e) => x + (e.t === 'u' ? e.a : -e.a), 0);
+    const cust = code => s.customers.find(c => c.code === code);
+    const set = o => () => this.setState(o);
+    const pill = on => on ? 'background:#FFFFFF;color:#121A15;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,0.1);' : 'background:transparent;color:#5B655E;';
+    const darkPill = on => on ? 'background:#FFFFFF;color:#121A15;font-weight:800;' : 'background:transparent;color:#B8C4BC;';
+    const tcol = on => on ? 'color:#0B6B43;font-weight:800;' : 'color:#7A837C;';
+    const balStyle = b => b > 0 ? 'color:#B3261E;' : 'color:#0B6B43;';
+    const entriesView = c => c.entries.slice().reverse().map(e => ({
+      note: e.note[li], d: e.d,
+      amt: (e.t === 'u' ? '+ ' : '− ') + fmt(e.a),
+      amtStyle: e.t === 'u' ? 'color:#B3261E;' : 'color:#0B6B43;',
+      sign: e.t === 'u' ? '+' : '−',
+      iconStyle: e.t === 'u' ? 'background:#FCEBE9;color:#A12A1F;' : 'background:#E6F2EB;color:#0B6B43;'
+    }));
+    const chip = st => st === 'new' ? ['background:#FCEBE9;color:#A12A1F;', t.statNew] : st === 'pack' ? ['background:#FFF1E3;color:#8A4A05;', t.statPack] : ['background:#E6F2EB;color:#0B6B43;', t.statDone];
+    const payChip = st => st === 'pending' ? ['background:#FFF1E3;color:#8A4A05;', t.pPending] : st === 'ok' ? ['background:#E6F2EB;color:#0B6B43;', t.pOk] : ['background:#FCEBE9;color:#A12A1F;', t.pRej];
+    const orderView = o => {
+      const c = cust(o.cust), ch = chip(o.st);
+      return {
+        id: o.id, time: o.time, custName: c.n[li], initial: c.n[li].charAt(0), total: fmt(o.total),
+        payLabel: o.pay === 'khata' ? t.onKhata : o.pay === 'cash' ? t.cash : (o.paid ? t.epPaid : t.epWait),
+        itemsText: o.items.map(it => this.prod(it[0]).n[li] + ' × ' + it[1]).join(s.lang === 'ur' ? '، ' : ', '),
+        thumbs: o.items.map(it => ({img: this.prod(it[0]).img, name: this.prod(it[0]).n[li], q: it[1]})),
+        chipStyle: ch[0], chipLabel: ch[1],
+        hasAction: o.st !== 'done',
+        actionLabel: o.st === 'new' ? t.accept : (o.pay === 'khata' ? t.deliveredKhata : t.delivered),
+        actionStyle: o.st === 'new' ? 'background:#0B6B43;color:#FFFFFF;' : 'background:#121A15;color:#FFFFFF;',
+        advance: () => this.advance(o.id)
+      };
+    };
+    const payView = p => {
+      const c = cust(p.cust), ch = payChip(p.st);
+      return {id: p.id, name: c.n[li], initial: c.n[li].charAt(0), amount: fmt(p.amount), tid: p.tid, time: p.time,
+        methodLabel: p.method === 'ep' ? 'Easypaisa' : 'JazzCash', purposeLabel: p.purpose === 'order' ? t.forOrder : t.forKhata,
+        chipStyle: ch[0], chipLabel: ch[1], confirm: () => this.confirmPay(p.id), reject: () => this.rejectPay(p.id)};
+    };
+    const pv = p => {
+      const q = s.cart[p.id] || 0;
+      return {img: p.img, name: p.n[li], unit: p.u[li], price: fmt(p.p), old: p.o ? fmt(p.o) : '', hasOff: !!p.o,
+        off: p.o ? '-' + Math.round((1 - p.p / p.o) * 100) + '%' : '', q: q, inCart: q > 0, notInCart: q === 0,
+        addLabel: t.add + ' ' + p.n[li], inc: () => this.chg(p.id, 1), dec: () => this.chg(p.id, -1)};
+    };
+
+    let cartCount = 0, cartTotalN = 0;
+    const cartItems = Object.keys(s.cart).map(id => {
+      const p = this.prod(id), q = s.cart[id];
+      cartCount += q; cartTotalN += p.p * q;
+      return {img: p.img, name: p.n[li], unit: p.u[li], q: q, line: fmt(p.p * q), inc: () => this.chg(p.id, 1), dec: () => this.chg(p.id, -1)};
+    });
+    const sq = s.sq.trim().toLowerCase();
+    const products = P.filter(p => (s.cat === 'all' || p.c === s.cat) && (!sq || p.n[0].indexOf(sq) >= 0 || p.n[1].toLowerCase().indexOf(sq) >= 0)).map(pv);
+    const deals = P.filter(p => p.o).map(pv);
+    const catObj = this.CATS.find(c => c.k === s.cat);
+    const cats = this.CATS.map(c => ({label: c.l[li], img: c.img, pick: set({cat: c.k === s.cat ? 'all' : c.k}),
+      ring: c.k === s.cat ? 'border:3px solid #0B6B43;' : 'border:3px solid transparent;',
+      labelStyle: c.k === s.cat ? 'color:#0B6B43;font-weight:800;' : 'color:#121A15;'}));
+
+    const payOpts = [['khata', t.pKhata, t.pKhataSub, 'Rs', 'background:#E6F2EB;color:#0B6B43;'], ['cash', t.pCash, t.pCashSub, '₨', 'background:#F3F4F1;color:#121A15;'], ['ep', t.pEp, t.pEpSub, 'EP', 'background:#FFF1E3;color:#A84E00;']]
+      .map(o => ({title: o[1], sub: o[2], icon: o[3], iconStyle: o[4], pick: set({pay: o[0]}),
+        box: s.pay === o[0] ? 'border:2px solid #0B6B43;' : 'border:1px solid #E2E5E0;',
+        radio: s.pay === o[0] ? 'border:6px solid #0B6B43;' : 'border:2px solid #C6CCC7;'}));
+
+    const waOrderText = t.billHi + ' ' + t.storeName + '\n' + t.waHead + ' — ' + t.khataNo + ' ' + s.codeInput + '\n' +
+      cartItems.map(ci => '• ' + ci.name + ' (' + ci.unit + ') × ' + ci.q).join('\n') +
+      '\n' + t.waTotal + ': ' + fmt(cartTotalN) + '\n' + t.waPay + ': ' + (s.pay === 'khata' ? t.pKhata : s.pay === 'cash' ? t.pCash : t.pEp) +
+      '\n' + t.waDel + ': ' + (s.del === 'home' ? t.delHome : t.delPick);
+
+    const meC = s.me ? cust(s.me) : null;
+    let k = {initial: '', name: '', code: '', bal: '', limit: '', barStyle: 'width:0%;', entries: [], orders: [], hasOrders: false, pays: [], hasPays: false};
+    if (meC) {
+      const b = bal(meC);
+      const myOrders = s.orders.filter(o => o.cust === meC.code).map(orderView);
+      const myPays = s.payments.filter(p => p.cust === meC.code).map(payView);
+      k = {initial: meC.n[li].charAt(0), name: meC.n[li], code: meC.code, bal: fmt(b), limit: fmt(meC.limit),
+        barStyle: 'width:' + Math.min(100, Math.max(0, b / meC.limit * 100)).toFixed(0) + '%;',
+        entries: entriesView(meC), orders: myOrders, hasOrders: myOrders.length > 0, pays: myPays, hasPays: myPays.length > 0};
+    }
+
+    const favs = this.FAV.map(f => { const p = this.prod(f[0]); return {img: p.img, name: p.n[li], unit: p.u[li], q: f[1], line: fmt(p.p * f[1])}; });
+    const favTotal = this.FAV.reduce((x, f) => x + this.prod(f[0]).p * f[1], 0);
+
+    const cq = s.cq.trim().toLowerCase();
+    const custList = s.customers.slice().sort((a, b) => bal(b) - bal(a))
+      .filter(c => !cq || c.code.indexOf(cq) >= 0 || c.n[0].indexOf(cq) >= 0 || c.n[1].toLowerCase().indexOf(cq) >= 0)
+      .map(c => { const b = bal(c); return {name: c.n[li], initial: c.n[li].charAt(0), code: c.code, bal: fmt(b), balStyle: balStyle(b), near: b > c.limit * 0.7,
+        open: set({openCust: c.code, eAmt: '', eNote: '', eType: 'u'})}; });
+    const outTotalN = s.customers.reduce((x, c) => x + bal(c), 0);
+
+    const oc = s.openCust ? cust(s.openCust) : null;
+    let d = {initial: '', name: '', ph: '', code: '', bal: '', balStyle: '', bill: '', waLink: 'https://wa.me/', entries: []};
+    if (oc) {
+      const b = bal(oc);
+      const bill = t.billHi + ' ' + oc.n[li] + (t.billSir ? ' ' + t.billSir : '') + '\n' + t.storeName + ' ' + t.billHead + '\n\n' +
+        oc.entries.map(e => e.d + '   ' + (e.t === 'u' ? t.billGoods : t.billPay) + '   ' + fmt(e.a) + '   (' + e.note[li] + ')').join('\n') +
+        '\n\n' + t.billTotal + ': ' + fmt(b) + '\n' + t.billThanks + ' (' + t.khataNo + ' ' + oc.code + ')';
+      d = {initial: oc.n[li].charAt(0), name: oc.n[li], ph: oc.ph, code: oc.code, bal: fmt(b), balStyle: balStyle(b), bill: bill,
+        waLink: 'https://wa.me/?text=' + encodeURIComponent(bill), entries: entriesView(oc)};
+    }
+
+    let sale = 0, rec = 0;
+    s.customers.forEach(c => c.entries.forEach(e => { if (e.t === 'u') sale += e.a; else rec += e.a; }));
+    const topSorted = s.customers.slice().sort((a, b) => bal(b) - bal(a)).slice(0, 3);
+    const maxB = Math.max(1, bal(topSorted[0]));
+    const h = {out: fmt(sale - rec), rec: fmt(rec),
+      top: topSorted.map(c => ({name: c.n[li], bal: fmt(bal(c)), barStyle: 'width:' + Math.max(4, bal(c) / maxB * 100).toFixed(0) + '%;'})),
+      stock: this.STOCK.map(x => ({img: this.prod(x[0]).img, name: this.prod(x[0]).n[li], q: x[1], style: x[1] <= 3 ? 'background:#FCEBE9;color:#A12A1F;' : 'background:#FFF1E3;color:#8A4A05;'}))};
+
+    const pendingPays = s.payments.filter(p => p.st === 'pending').map(payView);
+    const newOrders = s.orders.filter(o => o.st === 'new').length;
+    const isC = s.mode === 'cust', isO = s.mode === 'owner';
+    const mName = s.method === 'ep' ? 'Easypaisa' : 'JazzCash';
+
+    return {
+      t: t, lang: s.lang, dir: s.lang === 'ur' ? 'rtl' : 'ltr',
+      font: s.lang === 'ur' ? "'Noto Naskh Arabic', Inter, sans-serif" : "Inter, system-ui, sans-serif",
+      toggleLang: set({lang: s.lang === 'ur' ? 'en' : 'ur'}),
+      toCust: set({mode: 'cust', sheet: null}), toOwner: set({mode: 'owner', sheet: null}),
+      modeCustStyle: darkPill(isC), modeOwnerStyle: darkPill(isO),
+      isCustMode: isC, isOwnerMode: isO,
+      headTitle: isC ? t.storeName : t.ownerTitle, headSub: isC ? t.custSub : t.ownerSub,
+      showSearch: isC && s.ctab === 'shop',
+      isShop: isC && s.ctab === 'shop',
+      isCartEmpty: isC && s.ctab === 'cart' && cartCount === 0,
+      isCartFull: isC && s.ctab === 'cart' && cartCount > 0,
+      isKhataLogin: isC && s.ctab === 'khata' && !meC,
+      isKhataView: isC && s.ctab === 'khata' && !!meC,
+      isList: isC && s.ctab === 'list',
+      isDash: isO && s.otab === 'dash',
+      isOrders: isO && s.otab === 'orders',
+      isKhateList: isO && s.otab === 'khate' && !oc,
+      isKhateDetail: isO && s.otab === 'khate' && !!oc,
+      tc: {shop: tcol(s.ctab === 'shop'), cart: tcol(s.ctab === 'cart'), khata: tcol(s.ctab === 'khata'), list: tcol(s.ctab === 'list'),
+        dash: tcol(s.otab === 'dash'), orders: tcol(s.otab === 'orders'), khate: tcol(s.otab === 'khate')},
+      tabShop: set({ctab: 'shop'}), tabCart: set({ctab: 'cart'}), tabKhata: set({ctab: 'khata'}), tabList: set({ctab: 'list'}),
+      tabDash: set({otab: 'dash', openCust: null}), tabOrders: set({otab: 'orders', openCust: null}), tabKhate: set({otab: 'khate', openCust: null}),
+      pickVeg: set({cat: 'veg'}), clearCat: set({cat: 'all'}), hasCatFilter: s.cat !== 'all',
+      sq: s.sq, onSearch: e => this.setState({sq: e.target.value}),
+      cats: cats, products: products, noProducts: products.length === 0, deals: deals, showDeals: s.cat === 'all' && !sq,
+      gridTitle: catObj ? catObj.l[li] : t.allItems,
+      hasCart: cartCount > 0, cartCount: cartCount, cartTotal: fmt(cartTotalN), cartItems: cartItems, payOpts: payOpts,
+      delHome: set({del: 'home'}), delPick: set({del: 'pick'}), delHomeStyle: pill(s.del === 'home'), delPickStyle: pill(s.del === 'pick'),
+      codeInput: s.codeInput, onCode: e => this.setState({codeInput: e.target.value}),
+      placeOrder: () => this.placeOrder(), placeLabel: s.pay === 'ep' ? t.placeAndPay : t.placeOrder,
+      waOrderLink: 'https://wa.me/?text=' + encodeURIComponent(waOrderText),
+      loginCode: s.loginCode, onLogin: e => this.setState({loginCode: e.target.value}),
+      doLogin: () => { const v = String(s.loginCode || '').trim() || '1023'; if (cust(v)) this.setState({me: v}); else this.say('tNotFound'); },
+      doLogout: set({me: null, loginCode: ''}),
+      payKhataNow: () => this.setState({sheet: {purpose: 'khata'}, payAmt: meC ? String(Math.max(0, bal(meC))) : '', tid: ''}),
+      k: k, favs: favs, favTotal: fmt(favTotal), addAll: () => this.addAll(),
+      orders: s.orders.map(orderView), orderCount: s.orders.length, newOrders: newOrders, hasNewOrders: newOrders > 0,
+      pendingPays: pendingPays, pendingCount: pendingPays.length, hasPending: pendingPays.length > 0, noPendingPays: pendingPays.length === 0,
+      outTotal: fmt(outTotalN), custCount: s.customers.length, cq: s.cq, onCustSearch: e => this.setState({cq: e.target.value}),
+      custList: custList, newCust: () => this.say('tNewCust'),
+      d: d, closeCust: set({openCust: null}),
+      typeU: set({eType: 'u'}), typeW: set({eType: 'w'}), typeUStyle: pill(s.eType === 'u'), typeWStyle: pill(s.eType === 'w'),
+      eAmt: s.eAmt, onAmt: e => this.setState({eAmt: e.target.value}),
+      eNote: s.eNote, onNote: e => this.setState({eNote: e.target.value}),
+      addEntry: () => this.addEntry(),
+      entryBtnStyle: s.eType === 'u' ? 'background:#B3261E;' : 'background:#0B6B43;',
+      entryBtnLabel: s.eType === 'u' ? t.saveCredit : t.savePay,
+      h: h, billAll: () => this.say('tBills'),
+      sheetOpen: !!s.sheet && isC, closeSheet: set({sheet: null}),
+      mEp: set({method: 'ep'}), mJc: set({method: 'jc'}), mEpStyle: pill(s.method === 'ep'), mJcStyle: pill(s.method === 'jc'),
+      payAmt: s.payAmt, onPayAmt: e => this.setState({payAmt: e.target.value}),
+      tid: s.tid, onTid: e => this.setState({tid: e.target.value}),
+      steps: [{n: '1', text: t.step1.replace('{m}', mName)}, {n: '2', text: t.step2}, {n: '3', text: t.step3}],
+      submitPay: () => this.submitPay(),
+      toast: s.toast, hasToast: !!s.toast
+    };
+  }
+}
+    ; return Component; })();
+  var PitchC = (function(){ class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {lang: 'ur'};
+    this.C = {
+      ur: {
+        t: {logo:'م', langOther:'English', title:'ممتاز جنرل اسٹور — ڈیجیٹل کھاتہ اور آرڈر ایپ', sub:'رجسٹر کی جگہ موبائل۔ گاہک گھر بیٹھے آرڈر کریں اور اپنا کھاتہ خود دیکھیں۔',
+          probH:'آج کا مسئلہ', solH:'ہمارا حل', benH:'دکان کو فائدہ', phaseH:'کیسے شروع ہوگا', by:'تیار کردہ: اسد علی · NexaGrow'},
+        probs:['اُدھار کا حساب رجسٹر میں — مہینے کے آخر میں گھنٹوں جوڑنا','گاہک کہتا ہے "میں نے یہ نہیں لیا" — ثبوت صرف کاپی','رجسٹر گم یا خراب ہو جائے تو سارا حساب خطرے میں','بزرگوں اور خواتین کے لیے دکان تک آنا مشکل'],
+        sols:[{h:'ڈیجیٹل کھاتہ',b:'ہر اُدھار اور وصولی موبائل پر، کل خود بخود'},{h:'گاہک خود دیکھے',b:'اپنا کھاتہ اپنے موبائل پر — جھگڑا ختم'},{h:'WhatsApp بل',b:'مہینے کے آخر میں ایک بٹن سے سب کو حساب'},{h:'گھر بیٹھے آرڈر',b:'ایپ یا WhatsApp سے، گھر تک ڈیلیوری'},{h:'ماہانہ لسٹ',b:'پورا راشن ایک ٹچ میں دوبارہ'},{h:'اردو اور English',b:'سادہ، بڑے بٹن — ہر کوئی چلا سکے'}],
+        bens:['وقت کی بچت، حساب میں غلطی کم','وصولی جلدی — گاہک کو بقایا ہر وقت نظر آتا ہے','آس پاس کے گاؤں سے بھی آرڈر','علاقے میں "ممتاز اسٹور کی ایپ" کا نام'],
+        phases:[{n:'1',t:'دکاندار کا ڈیجیٹل کھاتہ + WhatsApp بل'},{n:'2',t:'گاہک اپنا کھاتہ خود دیکھیں'},{n:'3',t:'آرڈر، ڈیلیوری اور ماہانہ لسٹ'}]
+      },
+      en: {
+        t: {logo:'M', langOther:'اردو', title:'Mumtaz General Store — Digital Khata & Ordering App', sub:'Your phone replaces the register. Customers order from home and check their own khata.',
+          probH:'THE PROBLEM TODAY', solH:'OUR SOLUTION', benH:'WHAT THE STORE GAINS', phaseH:'HOW WE START', by:'Built by Asad Ali · NexaGrow'},
+        probs:['Credit is kept in a paper register — hours of adding up at month end','A customer says "I never took that" — the only proof is the notebook','If the register is lost or damaged, the whole record is at risk','Elderly people and women find it hard to come to the store'],
+        sols:[{h:'Digital khata',b:'Every credit and payment on the phone, totals done automatically'},{h:'Customers see it themselves',b:'Their own khata on their own phone — no more disputes'},{h:'WhatsApp bills',b:'Month-end statements to everyone with one tap'},{h:'Order from home',b:'Through the app or WhatsApp, delivered to the door'},{h:'Monthly list',b:'Reorder the full monthly groceries in one tap'},{h:'Urdu and English',b:'Simple, big buttons — anyone can use it'}],
+        bens:['Saves time, fewer mistakes in accounts','Faster recovery — customers always see what they owe','Orders from nearby villages too','"Mumtaz Store has its own app" — a name in the area'],
+        phases:[{n:'1',t:'Shopkeeper digital khata + WhatsApp bills'},{n:'2',t:'Customers view their own khata'},{n:'3',t:'Ordering, delivery and monthly list'}]
+      }
+    };
+  }
+  renderVals() {
+    const s = this.state, c = this.C[s.lang];
+    return {
+      t: c.t, probs: c.probs, sols: c.sols, bens: c.bens, phases: c.phases,
+      lang: s.lang, dir: s.lang === 'ur' ? 'rtl' : 'ltr',
+      font: s.lang === 'ur' ? "'Noto Naskh Arabic', Inter, sans-serif" : "Inter, system-ui, sans-serif",
+      toggleLang: () => this.setState({lang: s.lang === 'ur' ? 'en' : 'ur'})
+    };
+  }
+}
+    ; return Component; })();
+  var inst = { app: new MainC({}), pitch: new PitchC({}) };
+  var tpls = { app: document.getElementById('tpl-main'), pitch: document.getElementById('tpl-pitch') };
+  var view='app';
+
+  function look(scope, path){
+    path=path.trim();
+    if(path==='true') return true; if(path==='false') return false;
+    if(/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts=path.split('.'), v=scope;
+    for(var i=0;i<parts.length;i++){ if(v==null) return undefined; v=v[parts[i]]; }
+    return v;
+  }
+  var WHOLE=/^\s*\{\{([^}]+)\}\}\s*$/;
+  function interp(str, scope){ return str.replace(/\{\{([^}]+)\}\}/g, function(_,p){ var v=look(scope,p); return v==null?'':String(v); }); }
+  var EVT={onclick:'click',onchange:'input',oninput:'input',onsubmit:'submit',onkeydown:'keydown'};
+
+  function render(node, scope, out){
+    if(node.nodeType===3){ out.appendChild(document.createTextNode(interp(node.nodeValue, scope))); return; }
+    if(node.nodeType!==1) return;
+    var tag=node.localName;
+    if(tag==='sc-if'){ if(look(scope,(node.getAttribute('value')||'').replace(/[{}]/g,''))) kids(node,scope,out); return; }
+    if(tag==='sc-for'){
+      var list=look(scope,(node.getAttribute('list')||'').replace(/[{}]/g,''))||[], as=node.getAttribute('as')||'item';
+      list.forEach(function(it,i){ var s=Object.create(scope); s[as]=it; s.$index=i; kids(node,s,out); });
+      return;
+    }
+    var el=node.cloneNode(false);
+    Array.prototype.slice.call(node.attributes).forEach(function(a){
+      var name=a.name, val=a.value, m;
+      if(name.indexOf('hint-')===0){ el.removeAttribute(name); return; }
+      if(EVT[name]){ el.removeAttribute(name); m=val.match(WHOLE); var fn=m?look(scope,m[1]):null;
+        if(typeof fn==='function') el.addEventListener(EVT[name], function(e){ if(name==='onsubmit') e.preventDefault(); fn(e); });
+        return; }
+      if(val.indexOf('{{')>=0){
+        if(name==='value' && el.localName==='input'){ m=val.match(WHOLE); var v=m?look(scope,m[1]):interp(val,scope); el.removeAttribute('value'); el.value=v==null?'':v; el.setAttribute('value', v==null?'':v); return; }
+        el.setAttribute(name, interp(val, scope));
+      }
+    });
+    if(el.localName==='a' && /^https?:/.test(el.getAttribute('href')||'')){ el.setAttribute('target','_blank'); el.setAttribute('rel','noopener'); }
+    kids(node,scope,el); out.appendChild(el);
+  }
+  function kids(node,scope,out){ var c=node.content?node.content.childNodes:node.childNodes; for(var i=0;i<c.length;i++) render(c[i],scope,out); }
+
+  function paint(){
+    var mount=document.getElementById('mount');
+    var act=document.activeElement, fid=act&&act.id, sel=null;
+    try{ if(fid && act.selectionStart!=null) sel=[act.selectionStart,act.selectionEnd]; }catch(e){}
+    var scrolls=[].map.call(mount.querySelectorAll('.scr'),function(x){return x.scrollTop;});
+    var c=inst[view], vals=c.renderVals();
+    var frag=document.createDocumentFragment();
+    kids(tpls[view], vals, frag);
+    var key=view+'|'+(vals.mode||'')+'|'+(vals.isShop?'s':'')+(vals.isCartFull?'c':'')+(vals.isKhataView?'k':'')+(vals.isList?'l':'')+(vals.isOrders?'o':'')+(vals.isKhateList?'kl':'')+(vals.isKhateDetail?'kd':'')+(vals.isHisab?'h':'')+(vals.isCartEmpty?'ce':'')+(vals.isKhataLogin?'kg':'');
+    mount.innerHTML=''; mount.appendChild(frag);
+    if(key===current){ [].forEach.call(mount.querySelectorAll('.scr'),function(x,i){ if(scrolls[i]!=null) x.scrollTop=scrolls[i]; }); }
+    current=key;
+    if(fid){ var f=document.getElementById(fid); if(f){ f.focus(); try{ if(sel) f.setSelectionRange(sel[0],sel[1]); }catch(e){} } }
+    document.documentElement.lang = vals.lang || 'ur';
+  }
+  window.show=function(v){ view=v; current=null;
+    document.getElementById('sw-app').className = v==='app'?'on':'';
+    document.getElementById('sw-pitch').className = v==='pitch'?'on':'';
+    paint(); window.scrollTo(0,0); };
+  paint();
+})();
+</script>
+</body>
+</html>

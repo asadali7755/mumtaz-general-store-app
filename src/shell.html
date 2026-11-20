@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mumtaz General Store — App Demo</title>
+<meta name="description" content="ممتاز جنرل اسٹور — ڈیجیٹل کھاتہ اور آرڈر ایپ (ڈیمو) · Digital Khata & Ordering App demo">
+<meta property="og:title" content="Mumtaz General Store — Digital Khata & Order App">
+<meta property="og:description" content="ممتاز جنرل اسٹور کی اپنی ایپ — گھر بیٹھے آرڈر، ڈیجیٹل کھاتہ، WhatsApp بل۔ ڈیمو دیکھیں۔">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B5D3B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#E4E7E0;font-family:Inter,'Noto Naskh Arabic',sans-serif;-webkit-tap-highlight-color:transparent}
+a{color:#0B5D3B}
+.n{font-family:Inter,sans-serif;direction:ltr;unicode-bidi:isolate}
+.scr{scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+button,input{font-family:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #F2B33D;outline-offset:2px}
+.stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px 40px}
+.switch{display:flex;background:#FFFFFF;border-radius:99px;padding:4px;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.switch button{border:0;background:transparent;border-radius:99px;height:40px;padding:0 18px;font-size:14px;font-weight:600;color:#4A534C;cursor:pointer;font-family:'Noto Naskh Arabic',Inter,sans-serif}
+.switch button.on{background:#0B5D3B;color:#FFFFFF}
+.frame{border-radius:40px;overflow:hidden;box-shadow:0 0 0 10px #15201A,0 30px 60px -20px rgba(21,32,26,.45)}
+.credit{font-size:12px;color:#5D665F;font-family:Inter,sans-serif}
+@media (max-width:520px){
+  .stage{padding:0;gap:0;min-height:100dvh}
+  .switch{border-radius:0;width:100%;box-shadow:none;border-bottom:1px solid #E7E8E2;justify-content:center}
+  .switch button{flex:1}
+  .frame{border-radius:0;box-shadow:none;width:100%}
+  .frame>div{width:100% !important;height:calc(100dvh - 49px) !important}
+  .credit{display:none}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="switch" role="tablist">
+    <button id="sw-app" class="on" onclick="show('app')">ایپ ڈیمو · App</button>
+    <button id="sw-pitch" onclick="show('pitch')">یہ ایپ کیوں؟ · Why</button>
+  </div>
+  <div class="frame" id="mount"></div>
+  <div class="credit">Demo by Asad Ali · NexaGrow</div>
+</div>
+<template id="tpl-main">%%MAIN_TPL%%</template>
+<template id="tpl-pitch">%%PITCH_TPL%%</template>
+<script>
+(function(){
+  var current=null, pending=false;
+  function schedule(){ if(pending) return; pending=true; requestAnimationFrame(function(){ pending=false; paint(); }); }
+  window.DCLogic = class { constructor(props){ this.props=props||{}; this.state={}; }
+    setState(p){ var v = typeof p==='function' ? p(this.state) : p; this.state=Object.assign({}, this.state, v); schedule(); }
+    forceUpdate(){ schedule(); } };
+  var MainC = (function(){ %%MAIN_JS%%
+    ; return Component; })();
+  var PitchC = (function(){ %%PITCH_JS%%
+    ; return Component; })();
+  var inst = { app: new MainC({}), pitch: new PitchC({}) };
+  var tpls = { app: document.getElementById('tpl-main'), pitch: document.getElementById('tpl-pitch') };
+  var view='app';
+
+  function look(scope, path){
+    path=path.trim();
+    if(path==='true') return true; if(path==='false') return false;
+    if(/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts=path.split('.'), v=scope;
+    for(var i=0;i<parts.length;i++){ if(v==null) return undefined; v=v[parts[i]]; }
+    return v;
+  }
+  var WHOLE=/^\s*\{\{([^}]+)\}\}\s*$/;
+  function interp(str, scope){ return str.replace(/\{\{([^}]+)\}\}/g, function(_,p){ var v=look(scope,p); return v==null?'':String(v); }); }
+  var EVT={onclick:'click',onchange:'input',oninput:'input',onsubmit:'submit',onkeydown:'keydown'};
+
+  function render(node, scope, out){
+    if(node.nodeType===3){ out.appendChild(document.createTextNode(interp(node.nodeValue, scope))); return; }
+    if(node.nodeType!==1) return;
+    var tag=node.localName;
+    if(tag==='sc-if'){ if(look(scope,(node.getAttribute('value')||'').replace(/[{}]/g,''))) kids(node,scope,out); return; }
+    if(tag==='sc-for'){
+      var list=look(scope,(node.getAttribute('list')||'').replace(/[{}]/g,''))||[], as=node.getAttribute('as')||'item';
+      list.forEach(function(it,i){ var s=Object.create(scope); s[as]=it; s.$index=i; kids(node,s,out); });
+      return;
+    }
+    var el=node.cloneNode(false);
+    Array.prototype.slice.call(node.attributes).forEach(function(a){
+      var name=a.name, val=a.value, m;
+      if(name.indexOf('hint-')===0){ el.removeAttribute(name); return; }
+      if(EVT[name]){ el.removeAttribute(name); m=val.match(WHOLE); var fn=m?look(scope,m[1]):null;
+        if(typeof fn==='function') el.addEventListener(EVT[name], function(e){ if(name==='onsubmit') e.preventDefault(); fn(e); });
+        return; }
+      if(val.indexOf('{{')>=0){
+        if(name==='value' && el.localName==='input'){ m=val.match(WHOLE); var v=m?look(scope,m[1]):interp(val,scope); el.removeAttribute('value'); el.value=v==null?'':v; el.setAttribute('value', v==null?'':v); return; }
+        el.setAttribute(name, interp(val, scope));
+      }
+    });
+    if(el.localName==='a' && /^https?:/.test(el.getAttribute('href')||'')){ el.setAttribute('target','_blank'); el.setAttribute('rel','noopener'); }
+    kids(node,scope,el); out.appendChild(el);
+  }
+  function kids(node,scope,out){ var c=node.content?node.content.childNodes:node.childNodes; for(var i=0;i<c.length;i++) render(c[i],scope,out); }
+
+  function paint(){
+    var mount=document.getElementById('mount');
+    var act=document.activeElement, fid=act&&act.id, sel=null;
+    try{ if(fid && act.selectionStart!=null) sel=[act.selectionStart,act.selectionEnd]; }catch(e){}
+    var scrolls=[].map.call(mount.querySelectorAll('.scr'),function(x){return x.scrollTop;});
+    var c=inst[view], vals=c.renderVals();
+    var frag=document.createDocumentFragment();
+    kids(tpls[view], vals, frag);
+    var key=view+'|'+(vals.mode||'')+'|'+(vals.isShop?'s':'')+(vals.isCartFull?'c':'')+(vals.isKhataView?'k':'')+(vals.isList?'l':'')+(vals.isOrders?'o':'')+(vals.isKhateList?'kl':'')+(vals.isKhateDetail?'kd':'')+(vals.isHisab?'h':'')+(vals.isCartEmpty?'ce':'')+(vals.isKhataLogin?'kg':'');
+    mount.innerHTML=''; mount.appendChild(frag);
+    if(key===current){ [].forEach.call(mount.querySelectorAll('.scr'),function(x,i){ if(scrolls[i]!=null) x.scrollTop=scrolls[i]; }); }
+    current=key;
+    if(fid){ var f=document.getElementById(fid); if(f){ f.focus(); try{ if(sel) f.setSelectionRange(sel[0],sel[1]); }catch(e){} } }
+    document.documentElement.lang = vals.lang || 'ur';
+  }
+  window.show=function(v){ view=v; current=null;
+    document.getElementById('sw-app').className = v==='app'?'on':'';
+    document.getElementById('sw-pitch').className = v==='pitch'?'on':'';
+    paint(); window.scrollTo(0,0); };
+  paint();
+})();
+</script>
+</body>
+</html>
